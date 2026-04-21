@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/home/Hero";
 import EditorialImagePanel from "@/components/sections/home/EditorialImagePanel";
+import TrustSignal from "@/components/sections/home/TrustSignal";
 import ValuePropositions from "@/components/sections/home/ValuePropositions";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <Hero />
       <EditorialImagePanel />
+      <TrustSignal />
       <ValuePropositions />
     </>
   );

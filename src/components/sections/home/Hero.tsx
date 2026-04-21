@@ -116,6 +116,7 @@ export default function Hero() {
                 {...enter(0.66, 0.70, { y: 12, blur: 6 })}
               >
                 We turn it into infrastructure<motion.span
+                  id="headline-dot"
                   className="inline-block"
                   style={{ color: '#C64444' }}
                   {...enter(0.84, 0.55, { y: 3 })}
@@ -124,10 +125,10 @@ export default function Hero() {
             </h1>
 
             {/* Body + CTAs */}
-            <div className="shrink-0 flex flex-col gap-5 mb-8 md:mb-10 md:max-w-[480px]">
+            <div className="shrink-0 flex flex-col mb-8 md:mb-10 md:max-w-[480px]" style={{ gap: 'calc(var(--spacing) * 7)' }}>
               <motion.p
                 style={{
-                  fontSize: '18px', lineHeight: '1.62', letterSpacing: '-0.012em',
+                  fontSize: '16px', lineHeight: '1.62', letterSpacing: '-0.012em',
                   color: 'rgba(73,72,72,0.70)', willChange: 'transform, opacity',
                 }}
                 {...enter(0.82, 1.05, { y: 7, blur: 4 })}
