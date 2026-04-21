@@ -69,10 +69,10 @@ export default function Hero() {
           <AtmosphericBackground />
         </motion.div>
 
-        <div className="hero-noise absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true" />
+        <div className="hero-grain absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true" />
 
         {/* ── Content — scroll-dissolves as image rises ───────────────────── */}
-        <div className="relative z-10 h-full flex flex-col px-8 md:px-14 pt-[124px] md:pt-[148px]">
+        <div className="relative z-10 h-full flex flex-col px-8 md:px-14" style={{ paddingTop: '18vh' }}>
           <motion.div style={{ opacity: textOpacity, filter: textFilter }}>
 
             {/* Eyebrow */}
@@ -91,7 +91,7 @@ export default function Hero() {
                 scoped to the element being animated, not a cross-layer parent */}
             <h1
               className="shrink-0 font-normal leading-[1.04]"
-              style={{ fontSize: 'clamp(36px, 5.8vw, 78px)', marginBottom: 'calc(var(--spacing) * 4)' }}
+              style={{ fontSize: 'clamp(36px, 5.8vw, 78px)', marginBottom: 'calc(var(--spacing) * 4)', textShadow: '0 1px 0 rgba(255,255,255,0.30)' }}
             >
               {/* Group A — problem: softer, receding */}
               <motion.span
@@ -145,7 +145,7 @@ export default function Hero() {
                 <a
                   href="#contact"
                   data-cursor-label="GO"
-                  className="group inline-flex items-center gap-3 bg-oxide text-rational px-7 rounded-[2px] transition-colors duration-300 hover:bg-[#6a3635]"
+                  className="group inline-flex items-center gap-3 bg-oxide text-rational px-7 rounded-[2px] transition-all duration-300 hover:bg-[#6a3635] hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
                   style={{ paddingBlock: 'calc(var(--spacing) * 3)' }}
                 >
                   <span className="text-[12px] font-medium tracking-[0.02em] uppercase">
@@ -158,8 +158,26 @@ export default function Hero() {
                 <a
                   href="/pharo"
                   data-cursor-label="VIEW"
-                  className="group inline-flex items-center gap-3 border border-foundation/40 text-foundation px-7 rounded-[2px] transition-colors duration-300 hover:border-foundation/80"
-                  style={{ paddingBlock: 'calc(var(--spacing) * 3)' }}
+                  className="group inline-flex items-center gap-3 px-7 rounded-[2px]"
+                  style={{
+                    paddingBlock: 'calc(var(--spacing) * 3)',
+                    backgroundColor: 'rgba(73,72,72,0.08)',
+                    border: '1px solid rgba(73,72,72,0.18)',
+                    color: '#494848',
+                    transition: 'all 0.25s ease',
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLAnchorElement;
+                    el.style.backgroundColor = 'rgba(73,72,72,0.14)';
+                    el.style.borderColor = 'rgba(73,72,72,0.28)';
+                    el.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLAnchorElement;
+                    el.style.backgroundColor = 'rgba(73,72,72,0.08)';
+                    el.style.borderColor = 'rgba(73,72,72,0.18)';
+                    el.style.transform = '';
+                  }}
                 >
                   <span className="text-[12px] font-medium tracking-[0.02em] uppercase">
                     Discover Pharo
