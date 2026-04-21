@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
 import AtmosphericBackground from './AtmosphericBackground';
+import type { MotionValue } from 'framer-motion';
 
 // Single easing curve used everywhere — imperceptible start, ultra-smooth settle
 const E = [0.18, 1, 0.32, 1] as const;
@@ -15,6 +16,9 @@ export default function Hero() {
     target: heroRef,
     offset: ['start start', 'end start'],
   });
+
+  // Micro zoom-out — sticky container breathes out as user scrolls in
+  const heroScale = useTransform(scrollYProgress, [0, 0.5], shouldReduceMotion ? [1, 1] : [1, 0.97]);
 
   // Scroll-driven dissolve (runs after entry is long done)
   const textOpacity = useTransform(scrollYProgress, [0.14, 0.30], [1, 0]);
@@ -54,9 +58,9 @@ export default function Hero() {
       className="-mt-[64px]"
       style={{ height: '150vh', backgroundColor: '#EBE7E1' }}
     >
-      <div
+      <motion.div
         className="sticky top-0 overflow-hidden"
-        style={{ height: '100vh', zIndex: 1 }}
+        style={{ height: '100vh', zIndex: 1, scale: heroScale, transformOrigin: 'center center' }}
       >
         {/* ── Background settle — atmosphere breathes into place ──────────── */}
         <motion.div
@@ -66,7 +70,7 @@ export default function Hero() {
           transition={{ duration: 1.6, ease: E }}
           style={{ willChange: 'transform, opacity' }}
         >
-          <AtmosphericBackground />
+          <AtmosphericBackground scrollYProgress={scrollYProgress} />
         </motion.div>
 
         <div className="hero-grain absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true" />
@@ -91,19 +95,19 @@ export default function Hero() {
                 scoped to the element being animated, not a cross-layer parent */}
             <h1
               className="shrink-0 font-normal leading-[1.04]"
-              style={{ fontSize: 'clamp(36px, 5.8vw, 78px)', marginBottom: 'calc(var(--spacing) * 4)', textShadow: '0 1px 0 rgba(255,255,255,0.30)' }}
+              style={{ fontSize: 'clamp(32px, 5.0vw, 72px)', marginBottom: 'calc(var(--spacing) * 4)', textShadow: '0 1px 0 rgba(255,255,255,0.30)' }}
             >
               {/* Group A — problem: softer, receding */}
               <motion.span
                 className="block"
-                style={{ color: '#6B6763', letterSpacing: '-0.03em' }}
+                style={{ color: '#6B6763', letterSpacing: '-0.03em', fontWeight: 300 }}
                 {...enter(0.44, 0.70, { y: 12, blur: 6 })}
               >
                 Your company runs on knowledge
               </motion.span>
               <motion.span
                 className="block"
-                style={{ color: '#6B6763', letterSpacing: '-0.03em', marginBottom: '0.1em' }}
+                style={{ color: '#6B6763', letterSpacing: '-0.03em', fontWeight: 300, marginBottom: '0.1em' }}
                 {...enter(0.56, 0.70, { y: 12, blur: 6 })}
               >
                 that lives in people&apos;s heads.
@@ -112,7 +116,7 @@ export default function Hero() {
               {/* Group B — resolution: darker, denser, lands last */}
               <motion.span
                 className="block"
-                style={{ color: '#2E2A27', letterSpacing: '-0.038em', lineHeight: '1.00' }}
+                style={{ color: '#2E2A27', letterSpacing: '-0.038em', lineHeight: '1.00', fontWeight: 500 }}
                 {...enter(0.66, 0.70, { y: 12, blur: 6 })}
               >
                 We turn it into infrastructure<motion.span
@@ -125,7 +129,7 @@ export default function Hero() {
             </h1>
 
             {/* Body + CTAs */}
-            <div className="shrink-0 flex flex-col mb-8 md:mb-10 md:max-w-[480px]" style={{ gap: 'calc(var(--spacing) * 7)' }}>
+            <div className="shrink-0 flex flex-col mb-8 md:mb-10 md:max-w-[520px]" style={{ gap: 'calc(var(--spacing) * 8)' }}>
               <motion.p
                 style={{
                   fontSize: '16px', lineHeight: '1.62', letterSpacing: '-0.012em',
@@ -203,21 +207,22 @@ export default function Hero() {
             className="flex flex-col items-start gap-4"
             {...enter(1.35, 0.80)}
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-foundation/70">
+            <span className="text-[11px] font-medium uppercase tracking-[0.24em] text-foundation/70">
               Scroll
             </span>
-            <div className="relative w-[1px] h-12 bg-foundation/30 overflow-hidden">
+            <div className="relative w-[1px] h-14 bg-foundation/35 overflow-hidden">
               <motion.div
                 className="absolute left-0 w-full h-[14px] bg-ignition"
+                style={{ opacity: 0.85 }}
                 initial={{ y: -14 }}
-                animate={{ y: [-14, 48] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
+                animate={{ y: [-14, 56] }}
+                transition={{ duration: 3.6, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
               />
             </div>
           </motion.div>
         </motion.div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }

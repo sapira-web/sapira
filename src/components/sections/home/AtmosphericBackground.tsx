@@ -1,11 +1,22 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useTransform, useReducedMotion } from 'framer-motion'
+import type { MotionValue } from 'framer-motion'
 
-export default function AtmosphericBackground() {
+interface Props {
+  scrollYProgress: MotionValue<number>
+}
+
+export default function AtmosphericBackground({ scrollYProgress }: Props) {
+  const shouldReduceMotion = useReducedMotion()
   const [dotPos, setDotPos] = useState({ x: 0, y: 0, ready: false })
   const containerRef = useRef<HTMLDivElement>(null)
+
+  // Per-orb parallax — each mass drifts at its own rate
+  const leftOrbY  = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0,  35])
+  const rightOrbY = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -28])
+  const redOrbY   = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0,  10])
 
   useEffect(() => {
     const measure = () => {
@@ -32,57 +43,53 @@ export default function AtmosphericBackground() {
       {/* ── 1. Base — cool neutral light, distinctly lighter than the warm masses */}
       <div style={{ position: 'absolute', inset: 0, backgroundColor: '#F5F3EF' }} />
 
-      {/* ── 2. LEFT PRIMARY MASS — the dominant volumetric presence */}
-      {/* Core opacity 0.68 + moderate blur = clearly felt warm volume */}
-      {/* Warm cream against cooler base creates unmistakable spatial contrast */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          width: '1120px',
-          height: '1120px',
-          left: '-210px',
-          top: '-90px',
-          background: 'radial-gradient(circle, rgba(212,182,152,0.68) 0%, rgba(212,182,152,0.50) 20%, rgba(212,182,152,0.32) 40%, rgba(212,182,152,0.16) 58%, rgba(212,182,152,0.06) 72%, transparent 86%)',
-          borderRadius: '50%',
-          filter: 'blur(36px)',
-        }}
-        animate={{ x: [0, 18, -9, 0], y: [0, -12, 8, 0] }}
-        transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      {/* ── 2. LEFT PRIMARY MASS — reduced, left stays lighter */}
+      <motion.div style={{ position: 'absolute', left: '-220px', top: '-80px', y: leftOrbY }}>
+        <motion.div
+          style={{
+            position: 'relative',
+            width: '1060px',
+            height: '1060px',
+            background: 'radial-gradient(circle, rgba(212,182,152,0.56) 0%, rgba(212,182,152,0.40) 20%, rgba(212,182,152,0.24) 40%, rgba(212,182,152,0.11) 58%, rgba(212,182,152,0.04) 72%, transparent 86%)',
+            borderRadius: '50%',
+            filter: 'blur(36px)',
+          }}
+          animate={{ x: [0, 16, -8, 0], y: [0, -10, 7, 0] }}
+          transition={{ duration: 38, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+        />
+      </motion.div>
 
-      {/* ── 3. UPPER-RIGHT LUMINOUS FORM — secondary, architectural, near-white */}
-      {/* Brighter / more neutral than left mass. Creates expansive upper-right light. */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          width: '840px',
-          height: '840px',
-          right: '-170px',
-          top: '-210px',
-          background: 'radial-gradient(circle, rgba(242,237,228,0.82) 0%, rgba(242,237,228,0.60) 18%, rgba(242,237,228,0.36) 40%, rgba(242,237,228,0.14) 62%, transparent 80%)',
-          borderRadius: '50%',
-          filter: 'blur(42px)',
-        }}
-        animate={{ x: [0, -15, 10, 0], y: [0, 11, -7, 0] }}
-        transition={{ duration: 33, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
-      />
+      {/* ── 3. UPPER-RIGHT LUMINOUS FORM — increased, right stays denser */}
+      <motion.div style={{ position: 'absolute', right: '-140px', top: '-180px', y: rightOrbY }}>
+        <motion.div
+          style={{
+            position: 'relative',
+            width: '920px',
+            height: '920px',
+            background: 'radial-gradient(circle, rgba(242,237,228,0.92) 0%, rgba(242,237,228,0.70) 18%, rgba(242,237,228,0.42) 40%, rgba(242,237,228,0.18) 62%, transparent 80%)',
+            borderRadius: '50%',
+            filter: 'blur(40px)',
+          }}
+          animate={{ x: [0, -18, 12, 0], y: [0, 14, -9, 0] }}
+          transition={{ duration: 52, repeat: Infinity, ease: 'easeInOut', delay: 8 }}
+        />
+      </motion.div>
 
-      {/* ── 4. CENTRAL WARM CORE — Sapira identity / low-saturation red haze */}
-      {/* Not a blob. An atmospheric warmth concentrated center-left. */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          width: '700px',
-          height: '700px',
-          left: '26%',
-          top: '10%',
-          background: 'radial-gradient(circle, rgba(172,86,66,0.28) 0%, rgba(172,86,66,0.16) 28%, rgba(172,86,66,0.07) 52%, rgba(172,86,66,0.02) 70%, transparent 84%)',
-          borderRadius: '50%',
-          filter: 'blur(62px)',
-        }}
-        animate={{ x: [0, 11, -7, 0], y: [0, -9, 5, 0] }}
-        transition={{ duration: 21, repeat: Infinity, ease: 'easeInOut', delay: 9 }}
-      />
+      {/* ── 4. CENTRAL WARM CORE — Sapira identity red, focal point */}
+      <motion.div style={{ position: 'absolute', left: '26%', top: '10%', y: redOrbY }}>
+        <motion.div
+          style={{
+            position: 'relative',
+            width: '700px',
+            height: '700px',
+            background: 'radial-gradient(circle, rgba(172,86,66,0.28) 0%, rgba(172,86,66,0.16) 28%, rgba(172,86,66,0.07) 52%, rgba(172,86,66,0.02) 70%, transparent 84%)',
+            borderRadius: '50%',
+            filter: 'blur(62px)',
+          }}
+          animate={{ x: [0, 11, -7, 0], y: [0, -9, 5, 0] }}
+          transition={{ duration: 29, repeat: Infinity, ease: 'easeInOut', delay: 13 }}
+        />
+      </motion.div>
 
       {/* ── 5. Text-zone illumination — brightens left without killing the atmosphere */}
       <div
@@ -112,7 +119,17 @@ export default function AtmosphericBackground() {
         />
       )}
 
-      {/* ── 7. Edge vignette — perimeter falloff, centers the composition */}
+      {/* ── 7. Directional depth — adds weight to right-center, breaks symmetry */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse 70% 60% at 62% 38%, rgba(73,72,72,0.04) 0%, transparent 68%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* ── 8. Edge vignette — perimeter falloff */}
       <div
         style={{
           position: 'absolute',
