@@ -76,6 +76,15 @@ export default function AtmosphericBackground() {
         }}
       />
 
+      {/* Left-side light wash — improves text clarity, feels like natural light */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse 65% 80% at 0% 42%, rgba(239,235,230,0.32) 0%, rgba(239,235,230,0.12) 40%, transparent 70%)',
+        }}
+      />
+
       {/* Grain — textura fotográfica visible */}
       <div
         className="atmospheric-grain"

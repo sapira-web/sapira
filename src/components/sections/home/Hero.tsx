@@ -16,12 +16,17 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   });
 
-  // Dissolve completes at 0.44 — invisible before the sticky snaps at 0.50
-  const textOpacity = useTransform(scrollYProgress, [0.18, 0.44], [1, 0]);
+  // Opacity: fades steadily from 0.14 → 0.30
+  const textOpacity = useTransform(scrollYProgress, [0.14, 0.30], [1, 0]);
+
+  // Blur: decoupled — stays sharp through the early fade, then ramps in two stages.
+  // Phase 1 (0.14→0.21): near-zero blur, text stays readable
+  // Phase 2 (0.21→0.27): softening begins, barely perceptible
+  // Phase 3 (0.27→0.32): blur completes as image becomes dominant
   const textBlurNum = useTransform(
     scrollYProgress,
-    [0.18, 0.44],
-    [0, shouldReduceMotion ? 0 : 14]
+    [0.14, 0.21, 0.27, 0.32],
+    shouldReduceMotion ? [0, 0, 0, 0] : [0, 1.5, 5, 14]
   );
   const textFilter = useMotionTemplate`blur(${textBlurNum}px)`;
 
@@ -39,7 +44,7 @@ export default function Hero() {
     <section
       ref={heroRef}
       className="-mt-[68px]"
-      style={{ height: '200vh', backgroundColor: '#EBE7E1' }}
+      style={{ height: '150vh', backgroundColor: '#EBE7E1' }}
     >
       {/* Sticky frame — pinned for 100vh of scroll room, then releases naturally */}
       <div
