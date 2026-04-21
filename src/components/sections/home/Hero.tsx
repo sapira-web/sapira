@@ -56,7 +56,7 @@ export default function Hero() {
           className="shrink-0 flex flex-col gap-6 mb-8 md:mb-10 md:max-w-[480px]"
           {...entry(0.24)}
         >
-          <p style={{ fontSize: '16px', lineHeight: '1.74', letterSpacing: '-0.01em', color: 'rgba(73,72,72,0.70)' }}>
+          <p style={{ fontSize: '18px', lineHeight: '1.5', letterSpacing: '-0.01em', color: 'rgba(73,72,72,0.70)' }}>
             Sapira deploys bespoke AI systems that capture how your business actually operates, for European enterprises that have outgrown what any software was built to handle.
           </p>
 

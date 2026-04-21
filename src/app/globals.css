@@ -316,6 +316,47 @@
   mix-blend-mode: overlay;
 }
 
+/* ── Value Proposition visualization animations ──────────────────────────── */
+
+@keyframes viz-breathe {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 1; }
+}
+
+@keyframes viz-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes viz-pulse-dot {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.3); }
+}
+
+.viz-breathe {
+  animation: viz-breathe 3s ease-in-out infinite;
+}
+
+.viz-rotate {
+  animation: viz-rotate 40s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.viz-pulse {
+  animation: viz-pulse-dot 2.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viz-breathe,
+  .viz-rotate,
+  .viz-pulse {
+    animation: none;
+  }
+}
+
 /* Base resets */
 *,
 *::before,

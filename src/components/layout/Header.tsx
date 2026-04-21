@@ -11,9 +11,10 @@ export default function Header() {
       className="fixed top-0 left-0 w-full z-50 flex items-center px-8 md:px-14"
       style={{
         height: '68px',
-        backgroundColor: 'transparent',
-        backdropFilter: 'blur(0px)',
-        WebkitBackdropFilter: 'blur(0px)',
+        backgroundColor: 'rgba(249,249,249,0.85)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(0,0,0,0.05)',
       }}
       initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -8 }}
       animate={{ opacity: 1, y: 0 }}
@@ -30,8 +31,8 @@ export default function Header() {
         sapira
       </a>
 
-      {/* Nav — centered, absolutely positioned so wordmark and CTA stay at edges */}
-      <nav className="hidden md:flex items-center gap-9 absolute left-1/2 -translate-x-1/2">
+      {/* Nav — right aligned */}
+      <nav className="hidden md:flex items-center gap-9 ml-auto">
         {siteConfig.navigation.map(item => (
           <a
             key={item.label}
@@ -42,15 +43,6 @@ export default function Header() {
           </a>
         ))}
       </nav>
-
-      {/* Nav CTA */}
-      <a
-        href="#contact"
-        className="cta-nav-pill ml-auto focus-visible:outline-2 focus-visible:outline-ignition focus-visible:outline-offset-2"
-      >
-        See it on your data
-        <span className="cta-nav-arrow">→</span>
-      </a>
     </motion.header>
   );
 }
