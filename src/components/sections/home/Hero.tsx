@@ -82,7 +82,7 @@ export default function Hero() {
               {...enter(0.30, 0.80, { y: 4 })}
             >
               <span className="inline-block w-8 h-[1px] bg-ignition shrink-0" />
-              <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-foundation/60">
+              <span className="text-[12px] font-medium uppercase tracking-[0.18em] text-foundation/60">
                 Operational Intelligence
               </span>
             </motion.div>

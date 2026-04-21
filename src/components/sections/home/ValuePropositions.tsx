@@ -78,7 +78,7 @@ export default function ValuePropositions() {
               letterSpacing: '0.12em',
               textTransform: 'uppercase',
               color: 'rgba(73,72,72,0.55)',
-              marginBottom: '40px',
+              marginBottom: '24px',
             }}
             {...reveal(0, { y: 8, duration: 0.55 })}
           >
