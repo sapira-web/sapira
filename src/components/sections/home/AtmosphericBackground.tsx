@@ -2,67 +2,85 @@
 
 export default function AtmosphericBackground() {
   return (
-    <>
-      {/* Base */}
+    <div
+      className="absolute inset-0 overflow-hidden pointer-events-none"
+      style={{ zIndex: 0 }}
+      aria-hidden="true"
+    >
+      {/* Base — gradient diagonal cálido */}
       <div
-        className="absolute inset-0 z-0"
-        style={{ backgroundColor: '#F9F9F9' }}
-        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(135deg, #EFEBE6 0%, #E8DDD3 40%, #E0CDBF 70%, #D4B8A5 100%)',
+        }}
       />
 
-      {/* Volume 1 — Large warm sphere, bottom-left */}
+      {/* Orbe 1 — blanco luminoso, arriba-izquierda, protagonista */}
       <div
-        className="atm-vol absolute z-0 pointer-events-none"
         style={{
-          left: '-220px',
-          bottom: '-200px',
+          position: 'absolute',
+          top: '-25%',
+          left: '-15%',
           width: '1100px',
           height: '1100px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(228,206,183,0.78) 0%, rgba(234,213,193,0.44) 42%, transparent 70%)',
-          filter: 'blur(100px)',
-          animation: 'atm-drift-1 34s ease-in-out infinite',
+          background: 'radial-gradient(circle, rgba(255, 252, 247, 0.95) 0%, rgba(255, 252, 247, 0.6) 30%, rgba(255, 252, 247, 0) 65%)',
+          filter: 'blur(30px)',
+          willChange: 'transform',
         }}
-        aria-hidden="true"
       />
 
-      {/* Volume 2 — Secondary light, upper-right */}
+      {/* Orbe 2 — blanco luminoso, arriba-derecha, secundario */}
       <div
-        className="atm-vol absolute z-0 pointer-events-none"
         style={{
-          right: '-100px',
-          top: '-130px',
-          width: '840px',
-          height: '840px',
+          position: 'absolute',
+          top: '-10%',
+          right: '15%',
+          width: '750px',
+          height: '750px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(244,234,218,0.72) 0%, rgba(248,238,224,0.38) 43%, transparent 70%)',
-          filter: 'blur(82px)',
-          animation: 'atm-drift-2 28s ease-in-out infinite',
+          background: 'radial-gradient(circle, rgba(255, 252, 247, 0.85) 0%, rgba(255, 252, 247, 0.4) 35%, rgba(255, 252, 247, 0) 70%)',
+          filter: 'blur(40px)',
+          willChange: 'transform',
         }}
-        aria-hidden="true"
       />
 
-      {/* Volume 3 — Ambient glow, center-right */}
+      {/* Orbe 3 — acento Ignition Red, centro, detrás del headline */}
       <div
-        className="atm-vol absolute z-0 pointer-events-none"
         style={{
-          right: '3%',
-          top: '26%',
-          width: '740px',
-          height: '740px',
+          position: 'absolute',
+          top: '30%',
+          left: '40%',
+          width: '600px',
+          height: '600px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(210,183,162,0.46) 0%, rgba(198,170,148,0.22) 43%, transparent 70%)',
-          filter: 'blur(112px)',
-          animation: 'atm-drift-3 40s ease-in-out infinite',
+          background: 'radial-gradient(circle, rgba(198, 68, 68, 0.25) 0%, rgba(198, 68, 68, 0.1) 40%, rgba(198, 68, 68, 0) 70%)',
+          filter: 'blur(50px)',
+          willChange: 'transform',
         }}
-        aria-hidden="true"
       />
 
-      {/* Grain — tactile surface */}
+      {/* Orbe 4 — blanco luminoso, abajo-derecha, base */}
       <div
-        className="absolute inset-0 z-0 pointer-events-none grain-overlay"
-        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: '-20%',
+          right: '-10%',
+          width: '900px',
+          height: '900px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(255, 252, 247, 0.7) 0%, rgba(255, 252, 247, 0.3) 40%, rgba(255, 252, 247, 0) 70%)',
+          filter: 'blur(45px)',
+          willChange: 'transform',
+        }}
       />
-    </>
+
+      {/* Grain — textura fotográfica visible */}
+      <div
+        className="absolute inset-0 pointer-events-none grain-heavy"
+        style={{ zIndex: 1 }}
+      />
+    </div>
   )
 }
