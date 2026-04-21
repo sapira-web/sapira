@@ -76,7 +76,7 @@ export default function Hero() {
         <div className="hero-grain absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true" />
 
         {/* ── Content — scroll-dissolves as image rises ───────────────────── */}
-        <div className="relative z-10 h-full flex flex-col px-8 md:px-14" style={{ paddingTop: '18vh' }}>
+        <div className="relative z-10 h-full flex flex-col px-8 md:px-14 xl:px-20 2xl:px-28" style={{ paddingTop: '18vh' }}>
           <motion.div style={{ opacity: textOpacity, filter: textFilter }}>
 
             {/* Eyebrow */}
@@ -95,7 +95,7 @@ export default function Hero() {
                 scoped to the element being animated, not a cross-layer parent */}
             <h1
               className="shrink-0 font-normal leading-[1.04]"
-              style={{ fontSize: 'clamp(32px, 5.0vw, 72px)', marginBottom: 'calc(var(--spacing) * 4)', textShadow: '0 1px 0 rgba(255,255,255,0.30)' }}
+              style={{ fontSize: 'clamp(36px, 5.5vw, 104px)', marginBottom: 'calc(var(--spacing) * 4)', textShadow: '0 1px 0 rgba(255,255,255,0.30)' }}
             >
               {/* Group A — problem: softer, receding */}
               <motion.span
@@ -129,7 +129,7 @@ export default function Hero() {
             </h1>
 
             {/* Body + CTAs */}
-            <div className="shrink-0 flex flex-col mb-8 md:mb-10 md:max-w-[520px]" style={{ gap: 'calc(var(--spacing) * 8)' }}>
+            <div className="shrink-0 flex flex-col mb-8 md:mb-10 md:max-w-[520px] xl:max-w-[600px] 2xl:max-w-[680px]" style={{ gap: 'calc(var(--spacing) * 8)' }}>
               <motion.p
                 style={{
                   fontSize: '16px', lineHeight: '1.62', letterSpacing: '-0.012em',

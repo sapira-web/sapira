@@ -403,6 +403,20 @@
 }
 
 
+/* ── Responsive column padding — ValuePropositions ──────────────────────── */
+
+:root {
+  --vp-col-pad: 64px;
+}
+
+@media (min-width: 1280px) {
+  :root { --vp-col-pad: 80px; }
+}
+
+@media (min-width: 1536px) {
+  :root { --vp-col-pad: 96px; }
+}
+
 /* Base resets */
 *,
 *::before,

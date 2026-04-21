@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, useTransform, useReducedMotion } from 'framer-motion'
+import { motion, useTransform, useReducedMotion, useMotionValue } from 'framer-motion'
 import type { MotionValue } from 'framer-motion'
 
 interface Props {
-  scrollYProgress: MotionValue<number>
+  scrollYProgress?: MotionValue<number>
 }
 
 export default function AtmosphericBackground({ scrollYProgress }: Props) {
@@ -13,10 +13,14 @@ export default function AtmosphericBackground({ scrollYProgress }: Props) {
   const [dotPos, setDotPos] = useState({ x: 0, y: 0, ready: false })
   const containerRef = useRef<HTMLDivElement>(null)
 
+  // Static fallback when no scrollYProgress is provided (e.g. Hero.v2)
+  const staticProgress = useMotionValue(0)
+  const progress = scrollYProgress ?? staticProgress
+
   // Per-orb parallax — each mass drifts at its own rate
-  const leftOrbY  = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0,  35])
-  const rightOrbY = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -28])
-  const redOrbY   = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0,  10])
+  const leftOrbY  = useTransform(progress, [0, 1], shouldReduceMotion ? [0, 0] : [0,  35])
+  const rightOrbY = useTransform(progress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -28])
+  const redOrbY   = useTransform(progress, [0, 1], shouldReduceMotion ? [0, 0] : [0,  10])
 
   useEffect(() => {
     const measure = () => {
@@ -48,8 +52,8 @@ export default function AtmosphericBackground({ scrollYProgress }: Props) {
         <motion.div
           style={{
             position: 'relative',
-            width: '1060px',
-            height: '1060px',
+            width: 'max(1060px, 55vw)',
+            height: 'max(1060px, 55vw)',
             background: 'radial-gradient(circle, rgba(212,182,152,0.56) 0%, rgba(212,182,152,0.40) 20%, rgba(212,182,152,0.24) 40%, rgba(212,182,152,0.11) 58%, rgba(212,182,152,0.04) 72%, transparent 86%)',
             borderRadius: '50%',
             filter: 'blur(36px)',
@@ -64,8 +68,8 @@ export default function AtmosphericBackground({ scrollYProgress }: Props) {
         <motion.div
           style={{
             position: 'relative',
-            width: '920px',
-            height: '920px',
+            width: 'max(920px, 48vw)',
+            height: 'max(920px, 48vw)',
             background: 'radial-gradient(circle, rgba(242,237,228,0.92) 0%, rgba(242,237,228,0.70) 18%, rgba(242,237,228,0.42) 40%, rgba(242,237,228,0.18) 62%, transparent 80%)',
             borderRadius: '50%',
             filter: 'blur(40px)',
@@ -80,8 +84,8 @@ export default function AtmosphericBackground({ scrollYProgress }: Props) {
         <motion.div
           style={{
             position: 'relative',
-            width: '700px',
-            height: '700px',
+            width: 'max(700px, 36vw)',
+            height: 'max(700px, 36vw)',
             background: 'radial-gradient(circle, rgba(172,86,66,0.28) 0%, rgba(172,86,66,0.16) 28%, rgba(172,86,66,0.07) 52%, rgba(172,86,66,0.02) 70%, transparent 84%)',
             borderRadius: '50%',
             filter: 'blur(62px)',

@@ -63,8 +63,8 @@ export default function ValuePropositions() {
   return (
     <section style={{ backgroundColor: '#EFEBE6' }}>
       <div
-        className="w-full px-8 md:px-14"
-        style={{ paddingTop: '160px', paddingBottom: '160px' }}
+        className="w-full px-8 md:px-14 xl:px-20 2xl:px-28"
+        style={{ paddingTop: 'clamp(120px, 11vw, 200px)', paddingBottom: 'clamp(120px, 11vw, 200px)' }}
       >
 
         {/* ── Eyebrow ──────────────────────────────────────────────── */}
@@ -85,7 +85,7 @@ export default function ValuePropositions() {
         {/* ── Title — brand statement landing with authority ────────── */}
         <motion.h2
           style={{
-            fontSize: 'clamp(32px, 4vw, 62px)',
+            fontSize: 'clamp(32px, 4.5vw, 76px)',
             fontWeight: 400,
             lineHeight: 1.08,
             letterSpacing: '-0.032em',
@@ -114,8 +114,8 @@ export default function ValuePropositions() {
               style={{
                 position: 'relative',
                 paddingTop: '48px',
-                paddingRight: i < 2 ? '64px' : '0',
-                paddingLeft: i > 0 ? '64px' : '0',
+                paddingRight: i < 2 ? 'var(--vp-col-pad)' : '0',
+                paddingLeft: i > 0 ? 'var(--vp-col-pad)' : '0',
                 borderTop: '1px solid rgba(73,72,72,0.10)',
                 borderLeft: i > 0 ? '1px solid rgba(73,72,72,0.10)' : 'none',
                 willChange: 'transform',
@@ -144,7 +144,7 @@ export default function ValuePropositions() {
               {/* Number — structural anchor */}
               <motion.p
                 style={{
-                  fontSize: 'clamp(80px, 8vw, 120px)',
+                  fontSize: 'clamp(80px, 8vw, 160px)',
                   fontWeight: 400,
                   lineHeight: 1,
                   letterSpacing: '-0.05em',
@@ -161,7 +161,7 @@ export default function ValuePropositions() {
               {/* Block title */}
               <motion.h3
                 style={{
-                  fontSize: 'clamp(20px, 1.6vw, 26px)',
+                  fontSize: 'clamp(20px, 1.6vw, 32px)',
                   fontWeight: 500,
                   lineHeight: 1.22,
                   letterSpacing: '-0.022em',
