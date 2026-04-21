@@ -1,14 +1,13 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-
 const E = [0.22, 1, 0.36, 1] as const;
 
 const columns = [
   {
     id: '01',
     title: 'Coordination becomes infrastructure',
-    body: 'Cross-department processes run end to end — automatically. People stop being the system and start making decisions.',
+    body: 'Cross-department processes run end to end, automatically. People stop being the system and start making decisions.',
   },
   {
     id: '02',
@@ -18,14 +17,15 @@ const columns = [
   {
     id: '03',
     title: 'Processes that understand themselves',
-    body: 'The system learns how your company actually operates. When conditions change, it adapts — because it understood in the first place.',
+    body: 'The system learns how your company actually operates. When conditions change, it adapts, because it understood in the first place.',
   },
 ];
 
 export default function ValuePropositions() {
   const shouldReduceMotion = useReducedMotion();
 
-  function reveal(delay: number) {
+  function reveal(delay: number, opts: { y?: number; blur?: number; duration?: number } = {}) {
+    const { y = 14, blur = 0, duration = 0.7 } = opts;
     if (shouldReduceMotion) {
       return {
         initial: { opacity: 0 },
@@ -35,14 +35,16 @@ export default function ValuePropositions() {
       };
     }
     return {
-      initial: { opacity: 0, y: 14 },
-      whileInView: { opacity: 1, y: 0 },
-      viewport: { once: true, amount: 0.3 as const },
-      transition: { duration: 0.7, delay, ease: E },
+      initial: { opacity: 0, y, ...(blur ? { filter: `blur(${blur}px)` } : {}) },
+      whileInView: { opacity: 1, y: 0, ...(blur ? { filter: 'blur(0px)' } : {}) },
+      viewport: { once: true, amount: 0.25 as const },
+      transition: { duration, delay, ease: E },
     };
   }
 
-  function col(i: number) {
+  // colIndex × 120ms stagger + per-element offset within the column
+  function element(colIndex: number, offset: number, opts: { y?: number; blur?: number; duration?: number } = {}) {
+    const { y = 32, blur = 8, duration = 0.9 } = opts;
     if (shouldReduceMotion) {
       return {
         initial: { opacity: 0 },
@@ -52,143 +54,122 @@ export default function ValuePropositions() {
       };
     }
     return {
-      initial: { opacity: 0, y: 24, filter: 'blur(6px)' },
+      initial: { opacity: 0, y, filter: `blur(${blur}px)` },
       whileInView: { opacity: 1, y: 0, filter: 'blur(0px)' },
-      viewport: { once: true, amount: 0.15 as const },
-      transition: { duration: 0.85, delay: i * 0.12, ease: E },
+      viewport: { once: true, amount: 0.1 as const },
+      transition: { duration, delay: colIndex * 0.12 + offset, ease: E },
     };
   }
 
   return (
     <section style={{ backgroundColor: '#EFEBE6' }}>
-      <div className="max-w-[1360px] mx-auto px-8 md:px-14 py-[140px]">
+      <div
+        className="w-full px-8 md:px-14"
+        style={{ paddingTop: '160px', paddingBottom: '160px' }}
+      >
 
-        {/* ── Top: left (eyebrow + title) / right (paragraph) ─────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20" style={{ marginBottom: '88px' }}>
+        {/* ── Eyebrow + Monumental title ───────────────────────────── */}
+        <div style={{ marginBottom: '96px' }}>
 
-          {/* Left */}
-          <div>
-            <motion.p
-              style={{
-                fontSize: '12px',
-                fontWeight: 500,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: 'rgba(73,72,72,0.60)',
-                marginBottom: '32px',
-              }}
-              {...reveal(0)}
-            >
-              Value Propositions
-            </motion.p>
+          <motion.p
+            style={{
+              fontSize: '12px',
+              fontWeight: 500,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: 'rgba(73,72,72,0.55)',
+              marginBottom: '40px',
+            }}
+            {...reveal(0, { y: 8, duration: 0.55 })}
+          >
+            Value Propositions
+          </motion.p>
 
-            <motion.h2
-              style={{
-                fontSize: 'clamp(30px, 3.2vw, 54px)',
-                fontWeight: 400,
-                lineHeight: 1.08,
-                letterSpacing: '-0.03em',
-                color: '#494848',
-                maxWidth: '500px',
-              }}
-              {...reveal(0.08)}
-            >
-              Three things become possible when{' '}
-              <span style={{ color: '#562B2A' }}>Pharo</span>{' '}
-              runs your operations.
-            </motion.h2>
-          </div>
-
-          {/* Right */}
-          <div className="flex items-center">
-            <motion.p
-              style={{
-                fontSize: '17px',
-                lineHeight: 1.65,
-                color: 'rgba(73,72,72,0.70)',
-                maxWidth: '420px',
-              }}
-              {...reveal(0.18)}
-            >
-              What your company already knows — the coordination, the judgment,
-              the operational memory — becomes infrastructure. Built bespoke,
-              deployed in weeks, running at scale.
-            </motion.p>
-          </div>
+          <motion.h2
+            style={{
+              fontSize: 'clamp(34px, 4.2vw, 68px)',
+              fontWeight: 400,
+              lineHeight: 1.06,
+              letterSpacing: '-0.035em',
+              color: '#494848',
+              maxWidth: '1040px',
+            }}
+            {...reveal(0.09, { y: 28, blur: 8, duration: 1.05 })}
+          >
+            Three things become possible when <span style={{ color: '#C64444' }}>Pharo</span> runs your operations.
+          </motion.h2>
 
         </div>
 
-        {/* ── Section divider ──────────────────────────────────────── */}
-        <div style={{ height: '1px', backgroundColor: 'rgba(73,72,72,0.08)', marginBottom: '64px' }} />
+        {/* ── Horizontal divider ───────────────────────────────────── */}
+        <motion.div
+          style={{ height: '1px', backgroundColor: 'rgba(73,72,72,0.10)', marginBottom: '80px' }}
+          {...reveal(0.22, { y: 0, duration: 0.55 })}
+        />
 
-        {/* ── Three columns ────────────────────────────────────────── */}
+        {/* ── Three editorial columns ──────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-3">
-          {columns.map((item, i) => (
-            <motion.div
-              key={item.id}
-              className="group"
+          {columns.map((col, i) => (
+            <div
+              key={col.id}
+              className={i < 2 ? 'pb-16 md:pb-0' : ''}
               style={{
-                paddingTop: '8px',
-                paddingRight: i < 2 ? '48px' : '0',
-                paddingLeft: i > 0 ? '48px' : '0',
-                paddingBottom: i < 2 ? '64px' : '0',
-                borderLeft: i > 0 ? '1px solid rgba(73,72,72,0.08)' : 'none',
-                borderTop: i > 0 ? 'none' : 'none',
-                cursor: 'default',
-              }}
-              {...col(i)}
-              whileHover={shouldReduceMotion ? undefined : {
-                y: -4,
-                transition: { duration: 0.2, ease: 'easeOut' },
+                paddingTop: '4px',
+                paddingRight: i < 2 ? '60px' : '0',
+                paddingLeft: i > 0 ? '60px' : '0',
+                borderLeft: i > 0 ? '1px solid rgba(73,72,72,0.10)' : 'none',
               }}
             >
-              {/* Number */}
-              <p
-                className="font-normal transition-colors duration-200"
+              {/* Number — editorial anchor */}
+              <motion.p
                 style={{
-                  fontSize: '56px',
+                  fontSize: '88px',
+                  fontWeight: 400,
                   lineHeight: 1,
-                  letterSpacing: '-0.03em',
-                  marginBottom: '28px',
-                  opacity: 0.9,
+                  letterSpacing: '-0.04em',
                   color: '#C64444',
+                  opacity: 0.9,
+                  marginBottom: '44px',
                 }}
+                {...element(i, 0, { y: 20, blur: 6, duration: 0.85 })}
               >
-                <span className="group-hover:text-[#B53A3A] transition-colors duration-200 inline-block" style={{ color: 'inherit' }}>
-                  {item.id}
-                </span>
-              </p>
+                {col.id}
+              </motion.p>
 
               {/* Column title */}
-              <h3
+              <motion.h3
                 style={{
-                  fontSize: '21px',
+                  fontSize: '24px',
                   fontWeight: 500,
-                  lineHeight: 1.28,
-                  letterSpacing: '-0.02em',
+                  lineHeight: 1.25,
+                  letterSpacing: '-0.025em',
                   color: '#494848',
-                  marginBottom: '14px',
+                  marginBottom: '20px',
                 }}
+                {...element(i, 0.08, { y: 18, blur: 4, duration: 0.85 })}
               >
-                {item.title}
-              </h3>
+                {col.title}
+              </motion.h3>
 
               {/* Body */}
-              <p
+              <motion.p
                 style={{
-                  fontSize: '15px',
-                  lineHeight: 1.68,
-                  color: 'rgba(73,72,72,0.75)',
-                  maxWidth: '320px',
+                  fontSize: '16px',
+                  lineHeight: 1.62,
+                  color: 'rgba(73,72,72,0.72)',
+                  maxWidth: '300px',
                 }}
+                {...element(i, 0.16, { y: 12, blur: 0, duration: 0.8 })}
               >
-                {item.body}
-              </p>
-            </motion.div>
+                {col.body}
+              </motion.p>
+
+            </div>
           ))}
         </div>
 
       </div>
+
     </section>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform, easeOut } from 'framer-motion';
 
 export default function EditorialImagePanel() {
   const shouldReduceMotion = useReducedMotion();
@@ -16,66 +16,95 @@ export default function EditorialImagePanel() {
     [0, shouldReduceMotion ? 0 : -700]
   );
 
+  // Scale range starts at scroll 400 (image becoming visible) → 1400 (fully settled).
+  // Starting from 0 was wrong: image was already at ~1.02 by the time it entered the viewport.
+  const imageScale = useTransform(
+    scrollY,
+    [400, 1400],
+    [shouldReduceMotion ? 1 : 1.24, 1],
+    { ease: easeOut }
+  );
+
+  const imageBlurRaw = useTransform(
+    scrollY,
+    [400, 1400],
+    [shouldReduceMotion ? 0 : 1.5, 0],
+    { ease: easeOut }
+  );
+  const imageFilter = useTransform(imageBlurRaw, (v) => `blur(${v}px)`);
+
   return (
     <motion.section
       className="relative w-full"
       style={{ zIndex: 15, marginBottom: imageY }}
     >
-      <motion.div
-        className="relative w-full"
-        style={{ y: imageY }}
-      >
-        <Image
-          src="/images/sapira_1.png"
-          alt="Sapira operational intelligence platform"
-          width={1702}
-          height={924}
-          style={{ width: '100%', height: 'auto', display: 'block' }}
-          priority
-        />
+      {/* y-transform lives here — does NOT carry overflow:hidden */}
+      <motion.div className="relative w-full" style={{ y: imageY }}>
 
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to top, rgba(30,22,20,0.28) 0%, transparent 32%)',
-          }}
-          aria-hidden="true"
-        />
+        {/* Separate, non-transformed wrapper owns overflow:hidden.
+            A transformed element's overflow clipping is unreliable cross-browser. */}
+        <div className="relative w-full overflow-hidden">
+          <motion.div
+            style={{
+              scale: imageScale,
+              filter: imageFilter,
+              transformOrigin: 'center center',
+              willChange: 'transform, filter',
+            }}
+          >
+            <Image
+              src="/images/sapira_1.png"
+              alt="Sapira operational intelligence platform"
+              width={1702}
+              height={924}
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+              priority
+            />
+          </motion.div>
 
-        {/* Bottom-left label */}
-        <div className="absolute bottom-7 left-9 flex flex-col gap-[10px]" aria-hidden="true">
-          <p style={{
-            fontSize: '10px',
-            fontWeight: 500,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,252,249,0.52)',
-            margin: 0,
-          }}>
-            Pharo — Operational Intelligence
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'linear-gradient(to top, rgba(30,22,20,0.28) 0%, transparent 32%)',
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Bottom-left label */}
+          <div className="absolute bottom-7 left-9 flex flex-col gap-[10px]" aria-hidden="true">
+            <p style={{
+              fontSize: '10px',
+              fontWeight: 500,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,252,249,0.52)',
+              margin: 0,
+            }}>
+              Pharo — Operational Intelligence
+            </p>
+            <div style={{
+              width: '20px',
+              height: '1px',
+              backgroundColor: 'rgba(198,68,68,0.55)',
+            }} />
+          </div>
+
+          {/* Top-right index */}
+          <p
+            className="absolute top-6 right-8"
+            style={{
+              fontSize: '10px',
+              fontWeight: 500,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,252,249,0.32)',
+              margin: 0,
+            }}
+            aria-hidden="true"
+          >
+            01
           </p>
-          <div style={{
-            width: '20px',
-            height: '1px',
-            backgroundColor: 'rgba(198,68,68,0.55)',
-          }} />
         </div>
-
-        {/* Top-right index */}
-        <p
-          className="absolute top-6 right-8"
-          style={{
-            fontSize: '10px',
-            fontWeight: 500,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,252,249,0.32)',
-            margin: 0,
-          }}
-          aria-hidden="true"
-        >
-          01
-        </p>
 
       </motion.div>
     </motion.section>
