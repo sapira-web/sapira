@@ -54,10 +54,10 @@ export default function EditorialImagePanel() {
           aria-hidden="true"
           style={{
             position: 'absolute',
-            inset: '-64px',
+            inset: '-40px',
             zIndex: 0,
-            background: 'radial-gradient(ellipse at center, rgba(86,43,42,0.24) 0%, rgba(86,43,42,0.13) 40%, transparent 72%)',
-            filter: 'blur(58px)',
+            background: 'radial-gradient(ellipse at center, rgba(86,43,42,0.14) 0%, rgba(86,43,42,0.06) 48%, transparent 72%)',
+            filter: 'blur(48px)',
             pointerEvents: 'none',
             opacity: auraOpacity,
             scale: auraScale,
@@ -68,14 +68,14 @@ export default function EditorialImagePanel() {
         {/* Settle wrapper — micro y-drift as depth stabilises */}
         <motion.div className="relative w-full" style={{ y: settleY, zIndex: 1 }}>
 
-          {/* overflow:hidden + border-radius + static warm shadow
+          {/* overflow:hidden + static warm shadow
               Box-shadow renders outside the element — not clipped by overflow:hidden */}
           <div
             className="relative w-full overflow-hidden"
             style={{
               borderRadius: '0',
               boxShadow:
-                '0 60px 120px rgba(86,43,42,0.28), 0 24px 48px rgba(86,43,42,0.18), 0 8px 16px rgba(86,43,42,0.12)',
+                '0 8px 18px rgba(86,43,42,0.10), 0 24px 48px rgba(86,43,42,0.08), 0 60px 90px rgba(86,43,42,0.05)',
             }}
           >
             {/* Scale + blur layer */}

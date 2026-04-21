@@ -143,7 +143,8 @@ export default function Hero() {
                 {...enter(0.98, 0.90, { y: 5, scale: 0.99 })}
               >
                 <a
-                  href="#contact"
+                  href="#"
+                  onClick={e => e.preventDefault()}
                   data-cursor-label="GO"
                   className="group inline-flex items-center gap-3 bg-oxide text-rational px-7 rounded-[2px] transition-all duration-300 hover:bg-[#6a3635] hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
                   style={{ paddingBlock: 'calc(var(--spacing) * 3)' }}
@@ -156,7 +157,8 @@ export default function Hero() {
                   </span>
                 </a>
                 <a
-                  href="/pharo"
+                  href="#"
+                  onClick={e => e.preventDefault()}
                   data-cursor-label="VIEW"
                   className="group inline-flex items-center gap-3 px-7 rounded-[2px]"
                   style={{

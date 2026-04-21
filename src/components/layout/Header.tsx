@@ -25,7 +25,8 @@ export default function Header() {
     >
       {/* Wordmark */}
       <a
-        href="/"
+        href="#"
+        onClick={e => e.preventDefault()}
         className="text-[20px] font-medium text-foundation tracking-[-0.025em] lowercase hover:text-foundation/75 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-ignition focus-visible:outline-offset-2"
       >
         sapira

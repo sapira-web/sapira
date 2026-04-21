@@ -1,10 +1,10 @@
 export const siteConfig = {
   name: "Sapira",
   navigation: [
-    { label: "Pharo", href: "/pharo" },
-    { label: "Solutions", href: "/solutions" },
-    { label: "Results", href: "/results" },
-    { label: "Insights", href: "/insights" },
-    { label: "Company", href: "/company" },
+    { label: "Pharo", href: "#" },
+    { label: "Solutions", href: "#" },
+    { label: "Results", href: "#" },
+    { label: "Insights", href: "#" },
+    { label: "Company", href: "#" },
   ],
 };
