@@ -28,7 +28,7 @@ export default function BrandClose() {
     <section
       ref={ref}
       style={{
-        backgroundColor: '#EFEBE6',
+        backgroundColor: '#F9F9F9',
         position: 'relative',
         overflow: 'hidden',
         paddingTop: '0',

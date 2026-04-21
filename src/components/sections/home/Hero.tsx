@@ -56,7 +56,7 @@ export default function Hero() {
     <section
       ref={heroRef}
       className="-mt-[64px]"
-      style={{ height: '150vh', backgroundColor: '#EBE7E1' }}
+      style={{ height: '150vh' }}
     >
       <motion.div
         className="sticky top-0 overflow-hidden"
@@ -200,7 +200,7 @@ export default function Hero() {
 
         {/* ── Scroll indicator ─────────────────────────────────────────────── */}
         <motion.div
-          className="absolute bottom-10 left-12 hidden md:block z-20"
+          className="absolute bottom-10 left-8 md:left-14 xl:left-20 2xl:left-28 hidden md:block z-20"
           style={{ opacity: scrollIndicatorOpacity }}
         >
           <motion.div

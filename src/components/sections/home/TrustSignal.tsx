@@ -66,66 +66,9 @@ export default function TrustSignal() {
       style={{ backgroundColor: '#EFEBE6', position: 'relative', overflow: 'hidden' }}
     >
 
-      {/* ── Atmospheric background — same world as hero ───────────── */}
-
-      {/* Large warm mass — center-left, very diffuse */}
-      <div
-        style={{
-          position: 'absolute',
-          width: '1100px',
-          height: '900px',
-          left: '-160px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          background: 'radial-gradient(ellipse, rgba(212,182,152,0.38) 0%, rgba(212,182,152,0.18) 30%, rgba(212,182,152,0.06) 58%, transparent 78%)',
-          filter: 'blur(60px)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Subtle warm Sapira red — right side, barely there */}
-      <div
-        style={{
-          position: 'absolute',
-          width: '800px',
-          height: '700px',
-          right: '-120px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          background: 'radial-gradient(ellipse, rgba(172,86,66,0.11) 0%, rgba(172,86,66,0.04) 44%, transparent 70%)',
-          filter: 'blur(70px)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Soft radial glow behind number zone */}
-      <div
-        style={{
-          position: 'absolute',
-          width: '700px',
-          height: '560px',
-          left: '0px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          background: 'radial-gradient(ellipse, rgba(198,68,68,0.06) 0%, rgba(198,68,68,0.02) 48%, transparent 72%)',
-          filter: 'blur(48px)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Edge falloff — very soft */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(38,24,14,0.04) 80%, rgba(38,24,14,0.07) 100%)',
-          pointerEvents: 'none',
-        }}
-      />
-
       {/* ── Content ───────────────────────────────────────────────── */}
       <div
-        className="w-full px-8 md:px-14"
+        className="w-full px-8 md:px-14 xl:px-20 2xl:px-28"
         style={{ paddingTop: '220px', paddingBottom: '220px', position: 'relative', zIndex: 2 }}
       >
 

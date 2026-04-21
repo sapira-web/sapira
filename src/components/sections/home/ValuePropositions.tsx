@@ -61,7 +61,7 @@ export default function ValuePropositions() {
   }
 
   return (
-    <section style={{ backgroundColor: '#EFEBE6' }}>
+    <section style={{ backgroundColor: '#F9F9F9' }}>
       <div
         className="w-full px-8 md:px-14 xl:px-20 2xl:px-28"
         style={{ paddingTop: 'clamp(120px, 11vw, 200px)', paddingBottom: 'clamp(120px, 11vw, 200px)' }}
@@ -95,8 +95,7 @@ export default function ValuePropositions() {
           }}
           {...reveal(0.10, { y: 24, blur: 10, duration: 1.05 })}
         >
-          Three things become possible<br />
-          when <span style={{ color: '#C64444' }}>Pharo</span> runs your operations.
+          Three things become possible when <span style={{ color: '#C64444' }}>Pharo</span> runs your operations.
         </motion.h2>
 
         {/* ── Desktop grid ─────────────────────────────────────────── */}
