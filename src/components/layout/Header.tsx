@@ -10,8 +10,8 @@ export default function Header() {
     <motion.header
       className="fixed top-0 left-0 w-full z-50 flex items-center px-8 md:px-14"
       style={{
-        height: '68px',
-        backgroundColor: 'rgba(255,255,255,0.16)',
+        height: '64px',
+        backgroundColor: 'rgba(255, 255, 255, 0.40)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         borderBottom: '1px solid rgba(0,0,0,0.05)',

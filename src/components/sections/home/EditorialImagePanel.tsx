@@ -34,16 +34,13 @@ export default function EditorialImagePanel() {
           priority
         />
 
-        {/* Dark gradient — bottom label readability */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(to top, rgba(30,22,20,0.28) 0%, rgba(30,22,20,0.08) 32%, transparent 58%)',
+            background: 'linear-gradient(to top, rgba(30,22,20,0.28) 0%, transparent 32%)',
           }}
           aria-hidden="true"
         />
-
-        <div className="atmospheric-grain" aria-hidden="true" />
 
         {/* Bottom-left label */}
         <div className="absolute bottom-7 left-9 flex flex-col gap-[10px]" aria-hidden="true">

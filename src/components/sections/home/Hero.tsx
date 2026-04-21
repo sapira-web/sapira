@@ -51,7 +51,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="-mt-[68px]"
+      className="-mt-[64px]"
       style={{ height: '150vh', backgroundColor: '#EBE7E1' }}
     >
       <div
@@ -77,7 +77,7 @@ export default function Hero() {
 
             {/* Eyebrow */}
             <motion.div
-              className="flex items-center gap-4 mb-10"
+              className="flex items-center gap-4 mb-6"
               style={{ willChange: 'transform, opacity' }}
               {...enter(0.30, 0.80, { y: 4 })}
             >
@@ -90,37 +90,44 @@ export default function Hero() {
             {/* Headline — hero-headline on each span so background-clip: text is
                 scoped to the element being animated, not a cross-layer parent */}
             <h1
-              className="shrink-0 font-normal leading-[0.9]"
-              style={{ fontSize: 'clamp(36px, 5.8vw, 78px)', letterSpacing: '-0.04em', marginBottom: 'calc(var(--spacing) * 5)' }}
+              className="shrink-0 font-normal leading-[1.04]"
+              style={{ fontSize: 'clamp(36px, 5.8vw, 78px)', marginBottom: 'calc(var(--spacing) * 4)' }}
             >
+              {/* Group A — problem: softer, receding */}
               <motion.span
-                className="hero-headline block"
-                {...enter(0.44, 1.15, { y: 8 })}
+                className="block"
+                style={{ color: '#6B6763', letterSpacing: '-0.03em' }}
+                {...enter(0.44, 0.70, { y: 12, blur: 6 })}
               >
                 Your company runs on knowledge
               </motion.span>
               <motion.span
-                className="hero-headline block"
-                {...enter(0.57, 1.15, { y: 8 })}
+                className="block"
+                style={{ color: '#6B6763', letterSpacing: '-0.03em', marginBottom: '0.1em' }}
+                {...enter(0.56, 0.70, { y: 12, blur: 6 })}
               >
                 that lives in people&apos;s heads.
               </motion.span>
+
+              {/* Group B — resolution: darker, denser, lands last */}
               <motion.span
-                className="hero-headline block"
-                {...enter(0.70, 1.15, { y: 8 })}
+                className="block"
+                style={{ color: '#2E2A27', letterSpacing: '-0.038em', lineHeight: '1.00' }}
+                {...enter(0.66, 0.70, { y: 12, blur: 6 })}
               >
                 We turn it into infrastructure<motion.span
-                  className="hero-headline-period inline-block"
-                  {...enter(0.88, 0.70, { y: 3 })}
+                  className="inline-block"
+                  style={{ color: '#C64444' }}
+                  {...enter(0.84, 0.55, { y: 3 })}
                 >.</motion.span>
               </motion.span>
             </h1>
 
             {/* Body + CTAs */}
-            <div className="shrink-0 flex flex-col gap-8 mb-8 md:mb-10 md:max-w-[480px]">
+            <div className="shrink-0 flex flex-col gap-5 mb-8 md:mb-10 md:max-w-[480px]">
               <motion.p
                 style={{
-                  fontSize: '18px', lineHeight: '1.5', letterSpacing: '-0.01em',
+                  fontSize: '18px', lineHeight: '1.62', letterSpacing: '-0.012em',
                   color: 'rgba(73,72,72,0.70)', willChange: 'transform, opacity',
                 }}
                 {...enter(0.82, 1.05, { y: 7, blur: 4 })}
@@ -137,9 +144,10 @@ export default function Hero() {
                 <a
                   href="#contact"
                   data-cursor-label="GO"
-                  className="group inline-flex items-center gap-3 bg-oxide text-rational px-7 py-4 rounded-[2px] transition-colors duration-300 hover:bg-[#6a3635]"
+                  className="group inline-flex items-center gap-3 bg-oxide text-rational px-7 rounded-[2px] transition-colors duration-300 hover:bg-[#6a3635]"
+                  style={{ paddingBlock: 'calc(var(--spacing) * 3)' }}
                 >
-                  <span className="text-[13px] font-medium tracking-[0.02em] uppercase">
+                  <span className="text-[12px] font-medium tracking-[0.02em] uppercase">
                     See it on your data
                   </span>
                   <span className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1">
@@ -149,9 +157,10 @@ export default function Hero() {
                 <a
                   href="/pharo"
                   data-cursor-label="VIEW"
-                  className="group inline-flex items-center gap-3 border border-foundation/40 text-foundation px-7 py-4 rounded-[2px] transition-colors duration-300 hover:border-foundation/80"
+                  className="group inline-flex items-center gap-3 border border-foundation/40 text-foundation px-7 rounded-[2px] transition-colors duration-300 hover:border-foundation/80"
+                  style={{ paddingBlock: 'calc(var(--spacing) * 3)' }}
                 >
-                  <span className="text-[13px] font-medium tracking-[0.02em] uppercase">
+                  <span className="text-[12px] font-medium tracking-[0.02em] uppercase">
                     Discover Pharo
                   </span>
                   <span className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1">
@@ -170,17 +179,17 @@ export default function Hero() {
           style={{ opacity: scrollIndicatorOpacity }}
         >
           <motion.div
-            className="flex flex-col items-start gap-3"
+            className="flex flex-col items-start gap-4"
             {...enter(1.35, 0.80)}
           >
-            <span className="text-[9px] font-medium uppercase tracking-[0.22em] text-foundation/45">
+            <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-foundation/70">
               Scroll
             </span>
-            <div className="relative w-[1px] h-10 bg-foundation/20 overflow-hidden">
+            <div className="relative w-[1px] h-12 bg-foundation/30 overflow-hidden">
               <motion.div
-                className="absolute left-0 w-full h-[12px] bg-ignition"
-                initial={{ y: -12 }}
-                animate={{ y: [-12, 40] }}
+                className="absolute left-0 w-full h-[14px] bg-ignition"
+                initial={{ y: -14 }}
+                animate={{ y: [-14, 48] }}
                 transition={{ duration: 2.4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
               />
             </div>

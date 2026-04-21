@@ -1,27 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import ParticleNetwork from './ParticleNetwork';
-
-interface Particle {
-  id: number;
-  left: number;
-  top: number;
-  size: number;
-  delay: number;
-  duration: number;
-  color: 'foundation' | 'ignition';
-}
 
 export default function AtmosphericBackground() {
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
 
-  const springX = useSpring(mouseX, { stiffness: 25, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 25, damping: 30 });
-
-  const [particles, setParticles] = useState<Particle[]>([]);
+  const springX = useSpring(mouseX, { stiffness: 16, damping: 40 });
+  const springY = useSpring(mouseY, { stiffness: 16, damping: 40 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -32,26 +19,8 @@ export default function AtmosphericBackground() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: 35 }, (_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        size: 1.2 + Math.random() * 1.3,
-        delay: Math.random() * 6,
-        duration: 2.5 + Math.random() * 4,
-        color: Math.random() > 0.85 ? 'ignition' : 'foundation',
-      }))
-    );
-  }, []);
-
-  const orb1X = useTransform(springX, [0, 1], [-30, 30]);
-  const orb1Y = useTransform(springY, [0, 1], [-20, 20]);
-  const orb2X = useTransform(springX, [0, 1], [20, -20]);
-  const orb2Y = useTransform(springY, [0, 1], [15, -15]);
-  const orb4X = useTransform(springX, [0, 1], [-15, 15]);
-  const orb4Y = useTransform(springY, [0, 1], [10, -10]);
+  const lightX = useTransform(springX, [0, 1], [-14, 14]);
+  const lightY = useTransform(springY, [0, 1], [-9, 9]);
 
   return (
     <div
@@ -59,143 +28,106 @@ export default function AtmosphericBackground() {
       style={{ zIndex: 0 }}
       aria-hidden="true"
     >
-      {/* Base — warm diagonal gradient */}
+      {/* ── Layer 1 — Base field ─────────────────────────────────────────────
+          Mineral off-white diagonal. Left is clean and bright.
+          Right carries controlled warmth. No visible transition edge.       */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(135deg, #EFEBE6 0%, #E8DDD3 40%, #E0CDBF 70%, #D4B8A5 100%)',
+          background: 'linear-gradient(155deg, #F5F3F0 0%, #EFE9E2 38%, #E8DDD1 66%, #E2D5C3 100%)',
         }}
       />
 
-      {/* Orb 1 — luminous white, top-left */}
+      {/* ── Layer 2 — Left luminosity field ─────────────────────────────────
+          Brightens the text zone. Extremely soft ellipse, not a shape.
+          Parallax-linked: floats very gently with cursor.                   */}
       <motion.div
         style={{
           position: 'absolute',
-          top: '-25%',
-          left: '-15%',
-          width: '1100px',
-          height: '1100px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255,252,247,0.95) 0%, rgba(255,252,247,0.6) 30%, rgba(255,252,247,0) 65%)',
-          filter: 'blur(30px)',
-          x: orb1X,
-          y: orb1Y,
+          inset: 0,
+          background: 'radial-gradient(ellipse 72% 95% at -2% 42%, rgba(255,254,252,0.60) 0%, rgba(255,253,251,0.30) 32%, rgba(255,252,250,0.10) 58%, transparent 76%)',
+          x: lightX,
+          y: lightY,
         }}
       />
 
-      {/* Orb 2 — luminous white, top-right */}
+      {/* ── Layer 2b — Directional reinforcement ────────────────────────────
+          Horizontal band that increases left-right tonal separation.
+          Barely perceptible, but critical for depth.                        */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(90deg, rgba(255,254,252,0.28) 0%, rgba(255,253,251,0.10) 26%, transparent 48%)',
+        }}
+      />
+
+      {/* ── Layer 3 — Energy bloom ───────────────────────────────────────────
+          The focal point. Warm depth, center-right.
+          Not a blob — an enormous, highly diffused field.
+          Breathes very slowly. Reads as air temperature, not shape.         */}
       <motion.div
+        animate={{ x: [-5, 5, -5], y: [-3, 3, -3] }}
+        transition={{ duration: 42, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
         style={{
           position: 'absolute',
           top: '-10%',
-          right: '15%',
-          width: '750px',
-          height: '750px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255,252,247,0.85) 0%, rgba(255,252,247,0.4) 35%, rgba(255,252,247,0) 70%)',
-          filter: 'blur(40px)',
-          x: orb2X,
-          y: orb2Y,
+          left: '28%',
+          width: '120%',
+          height: '130%',
+          background: 'radial-gradient(ellipse 52% 58% at 52% 50%, rgba(110,50,35,0.13) 0%, rgba(110,50,35,0.055) 40%, rgba(110,50,35,0.015) 62%, transparent 78%)',
+          filter: 'blur(28px)',
         }}
       />
 
-      {/* Orb 3 — Ignition Red accent, center — breathes slowly */}
-      <motion.div
-        animate={{ x: [-8, 8, -8], y: [-6, 6, -6] }}
-        transition={{ duration: 24, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
-        style={{
-          position: 'absolute',
-          top: '30%',
-          left: '40%',
-          width: '600px',
-          height: '600px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(198,68,68,0.25) 0%, rgba(198,68,68,0.1) 40%, rgba(198,68,68,0) 70%)',
-          filter: 'blur(50px)',
-        }}
-      />
-
-      {/* Orb 4 — luminous white, bottom-right */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          bottom: '-20%',
-          right: '-10%',
-          width: '900px',
-          height: '900px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255,252,247,0.7) 0%, rgba(255,252,247,0.3) 40%, rgba(255,252,247,0) 70%)',
-          filter: 'blur(45px)',
-          x: orb4X,
-          y: orb4Y,
-        }}
-      />
-
-      {/* Left-side light wash */}
+      {/* ── Depth anchor — bottom-right ──────────────────────────────────────
+          Grounds the composition. Prevents the right side from floating.    */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse 65% 80% at 0% 42%, rgba(239,235,230,0.32) 0%, rgba(239,235,230,0.12) 40%, transparent 70%)',
+          background: 'radial-gradient(ellipse 55% 60% at 102% 105%, rgba(95,44,28,0.09) 0%, rgba(95,44,28,0.03) 48%, transparent 70%)',
         }}
       />
 
-      {/* Vignette — soft graduated darkening, center stays fully clean */}
+      {/* ── Micro contrast layer ─────────────────────────────────────────────
+          Adds very subtle mid-tone density center-right.
+          Gives presence and richness without adding visible color.           */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse 60% 65% at 75% 55%, rgba(75,45,30,0.06) 0%, rgba(75,45,30,0.018) 52%, transparent 74%)',
+        }}
+      />
+
+      {/* ── Vignette ─────────────────────────────────────────────────────────
+          Soft perimeter containment. Center fully open.                     */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 95% 80% at 50% 50%, transparent 0%, transparent 60%, rgba(73,72,72,0.04) 85%, rgba(73,72,72,0.09) 100%)',
+          background: 'radial-gradient(ellipse 92% 88% at 50% 50%, transparent 0%, transparent 46%, rgba(52,40,30,0.04) 74%, rgba(52,40,30,0.10) 100%)',
           zIndex: 5,
         }}
       />
 
-      {/* Vignette corners — very light diagonal accent */}
+      {/* ── Corner depth ─────────────────────────────────────────────────────
+          Bottom-left and top-right — editorial framing, very restrained.    */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `
-            radial-gradient(circle at 0% 100%, rgba(73,72,72,0.06) 0%, transparent 25%),
-            radial-gradient(circle at 100% 0%, rgba(73,72,72,0.05) 0%, transparent 30%)
+            radial-gradient(circle at 0% 100%, rgba(52,40,30,0.06) 0%, transparent 20%),
+            radial-gradient(circle at 100% 0%, rgba(52,40,30,0.045) 0%, transparent 24%)
           `,
           zIndex: 6,
         }}
       />
 
-      {/* Central luminosity — brightens the headline zone */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,253,249,0.35) 0%, transparent 60%)',
-          zIndex: 4,
-          mixBlendMode: 'screen',
-        }}
-      />
-
-      {/* Particles — pulsing micro-dots, client-side only */}
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 7 }}>
-        {particles.map((p) => (
-          <div
-            key={p.id}
-            className="absolute rounded-full"
-            style={{
-              left: `${p.left}%`,
-              top: `${p.top}%`,
-              width: `${p.size}px`,
-              height: `${p.size}px`,
-              backgroundColor: p.color === 'ignition' ? '#C64444' : '#494848',
-              opacity: 0.3,
-              animation: `particlePulse ${p.duration}s ease-in-out ${p.delay}s infinite`,
-              boxShadow: p.color === 'ignition' ? '0 0 8px rgba(198,68,68,0.4)' : 'none',
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Particle network — canvas-based animated connections */}
-      <ParticleNetwork />
-
-      {/* Grain — topmost layer to optically integrate everything below */}
+      {/* ── Grain ────────────────────────────────────────────────────────────
+          Integrates all layers into a single material surface.
+          Removes digital flatness. Topmost layer.                           */}
       <div className="atmospheric-grain" aria-hidden="true" />
     </div>
   );

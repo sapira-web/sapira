@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en" className={dmSans.variable}>
       <body>
         <Header />
-        <div className="flex min-h-screen flex-col pt-[68px]">
+        <div className="flex min-h-screen flex-col pt-[64px]">
           {children}
         </div>
       </body>

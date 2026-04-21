@@ -2,20 +2,19 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/content/site";
-import Container from "@/components/ui/Container";
 
 export default function Navbar() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.header
-      className="w-full border-b border-structural"
+      className="fixed top-0 left-0 w-full z-50 flex items-center px-8 md:px-14 border-b border-structural h-16"
+      style={{ backgroundColor: 'rgba(255, 255, 255, 0.40)' }}
       initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: shouldReduceMotion ? 0.3 : 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <Container>
-        <nav className="flex items-center justify-between py-4 md:py-6">
+        <nav className="w-full flex items-center justify-between">
           {/* Logo */}
           <a href="/" className="text-logo font-medium text-foundation lowercase tracking-[-0.025em]">
             sapira
@@ -43,7 +42,6 @@ export default function Navbar() {
             See it on your data →
           </a>
         </nav>
-      </Container>
     </motion.header>
   );
 }
