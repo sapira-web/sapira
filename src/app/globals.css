@@ -404,7 +404,11 @@ html, body, * {
   cursor: auto;
 }
 
-a, button, [role="button"], [data-cursor-label], summary {
+a, a *,
+button, button *,
+[role="button"], [role="button"] *,
+[data-cursor-label], [data-cursor-label] *,
+summary {
   cursor: pointer !important;
 }
 

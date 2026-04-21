@@ -3,6 +3,7 @@ import Hero from "@/components/sections/home/Hero";
 import EditorialImagePanel from "@/components/sections/home/EditorialImagePanel";
 import TrustSignal from "@/components/sections/home/TrustSignal";
 import ValuePropositions from "@/components/sections/home/ValuePropositions";
+import BrandClose from "@/components/sections/home/BrandClose";
 
 export const metadata: Metadata = {
   title: "Sapira — Operational intelligence for European enterprises",
@@ -17,6 +18,7 @@ export default function Home() {
       <EditorialImagePanel />
       <TrustSignal />
       <ValuePropositions />
+      <BrandClose />
     </>
   );
 }

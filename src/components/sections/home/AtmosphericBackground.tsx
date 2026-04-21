@@ -4,36 +4,21 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 export default function AtmosphericBackground() {
-  const [dotPosition, setDotPosition] = useState({ x: 0, y: 0, ready: false })
+  const [dotPos, setDotPos] = useState({ x: 0, y: 0, ready: false })
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const measurePosition = () => {
+    const measure = () => {
       const dot = document.getElementById('headline-dot')
       const container = containerRef.current
       if (!dot || !container) return
-
-      const dotRect = dot.getBoundingClientRect()
-      const containerRect = container.getBoundingClientRect()
-
-      const x = dotRect.left + dotRect.width / 2 - containerRect.left
-      const y = dotRect.top + dotRect.height / 2 - containerRect.top
-
-      setDotPosition({ x, y, ready: true })
+      const dr = dot.getBoundingClientRect()
+      const cr = container.getBoundingClientRect()
+      setDotPos({ x: dr.left + dr.width / 2 - cr.left, y: dr.top + dr.height / 2 - cr.top, ready: true })
     }
-
-    const timeouts = [100, 300, 600, 1000, 1800, 2500].map((delay) =>
-      setTimeout(measurePosition, delay)
-    )
-
-    window.addEventListener('resize', measurePosition)
-    window.addEventListener('scroll', measurePosition)
-
-    return () => {
-      timeouts.forEach(clearTimeout)
-      window.removeEventListener('resize', measurePosition)
-      window.removeEventListener('scroll', measurePosition)
-    }
+    const timers = [100, 400, 900, 1800, 2800].map(d => setTimeout(measure, d))
+    window.addEventListener('resize', measure)
+    return () => { timers.forEach(clearTimeout); window.removeEventListener('resize', measure) }
   }, [])
 
   return (
@@ -43,99 +28,102 @@ export default function AtmosphericBackground() {
       style={{ zIndex: 0 }}
       aria-hidden="true"
     >
-      {/* Base */}
+
+      {/* ── 1. Base — cool neutral light, distinctly lighter than the warm masses */}
+      <div style={{ position: 'absolute', inset: 0, backgroundColor: '#F5F3EF' }} />
+
+      {/* ── 2. LEFT PRIMARY MASS — the dominant volumetric presence */}
+      {/* Core opacity 0.68 + moderate blur = clearly felt warm volume */}
+      {/* Warm cream against cooler base creates unmistakable spatial contrast */}
+      <motion.div
+        style={{
+          position: 'absolute',
+          width: '1120px',
+          height: '1120px',
+          left: '-210px',
+          top: '-90px',
+          background: 'radial-gradient(circle, rgba(212,182,152,0.68) 0%, rgba(212,182,152,0.50) 20%, rgba(212,182,152,0.32) 40%, rgba(212,182,152,0.16) 58%, rgba(212,182,152,0.06) 72%, transparent 86%)',
+          borderRadius: '50%',
+          filter: 'blur(36px)',
+        }}
+        animate={{ x: [0, 18, -9, 0], y: [0, -12, 8, 0] }}
+        transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      {/* ── 3. UPPER-RIGHT LUMINOUS FORM — secondary, architectural, near-white */}
+      {/* Brighter / more neutral than left mass. Creates expansive upper-right light. */}
+      <motion.div
+        style={{
+          position: 'absolute',
+          width: '840px',
+          height: '840px',
+          right: '-170px',
+          top: '-210px',
+          background: 'radial-gradient(circle, rgba(242,237,228,0.82) 0%, rgba(242,237,228,0.60) 18%, rgba(242,237,228,0.36) 40%, rgba(242,237,228,0.14) 62%, transparent 80%)',
+          borderRadius: '50%',
+          filter: 'blur(42px)',
+        }}
+        animate={{ x: [0, -15, 10, 0], y: [0, 11, -7, 0] }}
+        transition={{ duration: 33, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
+      />
+
+      {/* ── 4. CENTRAL WARM CORE — Sapira identity / low-saturation red haze */}
+      {/* Not a blob. An atmospheric warmth concentrated center-left. */}
+      <motion.div
+        style={{
+          position: 'absolute',
+          width: '700px',
+          height: '700px',
+          left: '26%',
+          top: '10%',
+          background: 'radial-gradient(circle, rgba(172,86,66,0.28) 0%, rgba(172,86,66,0.16) 28%, rgba(172,86,66,0.07) 52%, rgba(172,86,66,0.02) 70%, transparent 84%)',
+          borderRadius: '50%',
+          filter: 'blur(62px)',
+        }}
+        animate={{ x: [0, 11, -7, 0], y: [0, -9, 5, 0] }}
+        transition={{ duration: 21, repeat: Infinity, ease: 'easeInOut', delay: 9 }}
+      />
+
+      {/* ── 5. Text-zone illumination — brightens left without killing the atmosphere */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundColor: '#F7F4F0',
+          background: 'linear-gradient(110deg, rgba(255,254,250,0.40) 0%, rgba(255,254,250,0.12) 28%, transparent 48%)',
         }}
       />
 
-      {/* Orb 1 — left, terracotta */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          width: '1200px',
-          height: '1200px',
-          left: '-150px',
-          top: '-50px',
-          background: 'radial-gradient(circle, rgba(198,145,130,0.48) 0%, rgba(198,145,130,0.36) 18%, rgba(198,145,130,0.22) 38%, rgba(198,145,130,0.10) 58%, transparent 78%)',
-          borderRadius: '50%',
-        }}
-        animate={{ x: [0, 20, -10, 0], y: [0, -15, 10, 0], scale: [1, 1.03, 0.98, 1] }}
-        transition={{ duration: 45, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* Orb 2 — top-right, white luminous halo */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          width: '1100px',
-          height: '1100px',
-          right: '-150px',
-          top: '-250px',
-          background: 'radial-gradient(circle, rgba(255,252,247,0.90) 0%, rgba(255,252,247,0.65) 15%, rgba(255,252,247,0.40) 35%, rgba(255,252,247,0.18) 55%, transparent 75%)',
-          borderRadius: '50%',
-        }}
-        animate={{ x: [0, -18, 12, 0], y: [0, 12, -8, 0], scale: [1, 0.97, 1.02, 1] }}
-        transition={{ duration: 55, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* Orb 3 — bottom-left, white secondary halo */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          width: '950px',
-          height: '950px',
-          left: '-250px',
-          bottom: '-300px',
-          background: 'radial-gradient(circle, rgba(255,252,247,0.92) 0%, rgba(255,252,247,0.68) 15%, rgba(255,252,247,0.40) 35%, rgba(255,252,247,0.18) 58%, transparent 78%)',
-          borderRadius: '50%',
-        }}
-        animate={{ x: [0, 15, -20, 0], y: [0, -10, 8, 0], scale: [1, 1.04, 0.97, 1] }}
-        transition={{ duration: 50, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
-      />
-
-      {/* Focal point — Ignition Red, anchored to headline dot */}
-      {dotPosition.ready && (
+      {/* ── 6. Warm presence at headline dot — emerges 1.8s in, synced with "." reveal */}
+      {dotPos.ready && (
         <motion.div
           style={{
             position: 'absolute',
-            width: '900px',
-            height: '900px',
-            left: dotPosition.x - 450,
-            top: dotPosition.y - 450,
-            background: 'radial-gradient(circle, rgba(198,68,68,0.55) 0%, rgba(198,68,68,0.45) 6%, rgba(198,68,68,0.33) 14%, rgba(198,68,68,0.22) 24%, rgba(198,68,68,0.14) 36%, rgba(198,68,68,0.08) 48%, rgba(198,68,68,0.04) 62%, rgba(198,68,68,0.015) 78%, transparent 100%)',
+            width: '700px',
+            height: '700px',
+            left: dotPos.x - 350,
+            top: dotPos.y - 350,
+            background: 'radial-gradient(circle, rgba(185,88,70,0.17) 0%, rgba(185,88,70,0.06) 42%, transparent 70%)',
             borderRadius: '50%',
+            filter: 'blur(80px)',
           }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{
-            opacity: 1,
-            scale: [1, 1.05, 0.96, 1],
-            x: [0, -6, 8, 0],
-            y: [0, 6, -4, 0],
-          }}
-          transition={{
-            opacity: { duration: 1.2, delay: 1.8, ease: [0.22, 1, 0.36, 1] },
-            scale: { duration: 35, repeat: Infinity, ease: 'easeInOut', delay: 2 },
-            x: { duration: 35, repeat: Infinity, ease: 'easeInOut', delay: 2 },
-            y: { duration: 35, repeat: Infinity, ease: 'easeInOut', delay: 2 },
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2.2, delay: 1.8, ease: [0.22, 1, 0.36, 1] }}
         />
       )}
 
-      {/* Vignette */}
+      {/* ── 7. Edge vignette — perimeter falloff, centers the composition */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse 92% 78% at 50% 50%, transparent 45%, rgba(73,72,72,0.03) 80%, rgba(73,72,72,0.07) 100%)',
+          background: 'radial-gradient(ellipse 86% 76% at 50% 50%, transparent 36%, rgba(38,24,14,0.05) 70%, rgba(38,24,14,0.10) 100%)',
         }}
       />
 
-      {/* Grain */}
+      {/* ── 8. Grain */}
       <div className="nucleate-grain" />
+
     </div>
   )
 }

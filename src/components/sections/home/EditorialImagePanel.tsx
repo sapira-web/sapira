@@ -10,25 +10,25 @@ export default function EditorialImagePanel() {
   // Calibrated for MacBook viewport (~900px):
   // — image enters viewport bottom at scroll ~600px (hero content mid-dissolve)
   // — image dominates upper viewport by sticky release (~900px scroll)
+  // Negative start pulls image above its natural DOM position so it enters
+  // the viewport mid-hero-dissolve (~scroll 290px) instead of after hero releases.
   const imageY = useTransform(
     scrollY,
     [0, 1400],
-    [0, shouldReduceMotion ? 0 : -700]
+    [shouldReduceMotion ? 0 : -160, shouldReduceMotion ? 0 : -700]
   );
 
-  // Scale range starts at scroll 400 (image becoming visible) → 1400 (fully settled).
-  // Starting from 0 was wrong: image was already at ~1.02 by the time it entered the viewport.
   const imageScale = useTransform(
     scrollY,
-    [400, 1400],
-    [shouldReduceMotion ? 1 : 1.24, 1],
+    [200, 1400],
+    [shouldReduceMotion ? 1 : 1.18, 1],
     { ease: easeOut }
   );
 
   const imageBlurRaw = useTransform(
     scrollY,
-    [400, 1400],
-    [shouldReduceMotion ? 0 : 1.5, 0],
+    [200, 1400],
+    [shouldReduceMotion ? 0 : 1.2, 0],
     { ease: easeOut }
   );
   const imageFilter = useTransform(imageBlurRaw, (v) => `blur(${v}px)`);
@@ -70,26 +70,7 @@ export default function EditorialImagePanel() {
             aria-hidden="true"
           />
 
-          {/* Bottom-left label */}
-          <div className="absolute bottom-7 left-9 flex flex-col gap-[10px]" aria-hidden="true">
-            <p style={{
-              fontSize: '10px',
-              fontWeight: 500,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,252,249,0.52)',
-              margin: 0,
-            }}>
-              Pharo — Operational Intelligence
-            </p>
-            <div style={{
-              width: '20px',
-              height: '1px',
-              backgroundColor: 'rgba(198,68,68,0.55)',
-            }} />
-          </div>
-
-          {/* Top-right index */}
+{/* Top-right index */}
           <p
             className="absolute top-6 right-8"
             style={{

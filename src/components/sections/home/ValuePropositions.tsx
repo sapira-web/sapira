@@ -168,6 +168,12 @@ export default function ValuePropositions() {
           ))}
         </div>
 
+        {/* ── Closing divider ──────────────────────────────────────── */}
+        <motion.div
+          style={{ height: '1px', backgroundColor: 'rgba(73,72,72,0.10)', marginTop: '80px' }}
+          {...reveal(0, { y: 0, duration: 0.55 })}
+        />
+
       </div>
 
     </section>
