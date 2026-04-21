@@ -7,27 +7,26 @@ export default function EditorialImagePanel() {
   const shouldReduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
 
-  const imageY = useTransform(scrollY, [0, 650], [0, shouldReduceMotion ? 0 : -90]);
+  // Calibrated for MacBook viewport (~900px):
+  // — image enters viewport bottom at scroll ~600px (hero content mid-dissolve)
+  // — image dominates upper viewport by sticky release (~900px scroll)
+  const imageY = useTransform(
+    scrollY,
+    [0, 1400],
+    [0, shouldReduceMotion ? 0 : -700]
+  );
 
   return (
     <section
       className="relative w-full pb-20 md:pb-28"
-      style={{ marginTop: '-64px', zIndex: 15 }}
+      style={{ zIndex: 15 }}
     >
       <motion.div
         className="relative w-full overflow-hidden"
         style={{
-          borderRadius: '0px',
           aspectRatio: '16 / 7',
           minHeight: '300px',
           y: imageY,
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          duration: shouldReduceMotion ? 0.2 : 0.95,
-          delay: shouldReduceMotion ? 0 : 0.55,
-          ease: [0.22, 1, 0.36, 1],
         }}
       >
         <Image
@@ -38,7 +37,7 @@ export default function EditorialImagePanel() {
           priority
         />
 
-        {/* Dark gradient overlay — bottom, for label readability */}
+        {/* Dark gradient — bottom label readability */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -47,7 +46,6 @@ export default function EditorialImagePanel() {
           aria-hidden="true"
         />
 
-        {/* Grain — same system as hero */}
         <div className="atmospheric-grain" aria-hidden="true" />
 
         {/* Bottom-left label */}
