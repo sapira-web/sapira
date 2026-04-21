@@ -78,8 +78,8 @@ export default function AtmosphericBackground() {
 
       {/* Grain — textura fotográfica visible */}
       <div
-        className="absolute inset-0 pointer-events-none grain-heavy"
-        style={{ zIndex: 1 }}
+        className="atmospheric-grain"
+        aria-hidden="true"
       />
     </div>
   )
