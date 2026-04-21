@@ -17,23 +17,20 @@ export default function EditorialImagePanel() {
   );
 
   return (
-    <section
-      className="relative w-full pb-20 md:pb-28"
-      style={{ zIndex: 15 }}
+    <motion.section
+      className="relative w-full"
+      style={{ zIndex: 15, marginBottom: imageY }}
     >
       <motion.div
-        className="relative w-full overflow-hidden"
-        style={{
-          aspectRatio: '16 / 7',
-          minHeight: '300px',
-          y: imageY,
-        }}
+        className="relative w-full"
+        style={{ y: imageY }}
       >
         <Image
           src="/images/sapira_1.png"
           alt="Sapira operational intelligence platform"
-          fill
-          style={{ objectFit: 'cover' }}
+          width={1702}
+          height={924}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
           priority
         />
 
@@ -41,7 +38,7 @@ export default function EditorialImagePanel() {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(to top, rgba(30,22,20,0.52) 0%, rgba(30,22,20,0.18) 32%, transparent 58%)',
+            background: 'linear-gradient(to top, rgba(30,22,20,0.28) 0%, rgba(30,22,20,0.08) 32%, transparent 58%)',
           }}
           aria-hidden="true"
         />
@@ -84,6 +81,6 @@ export default function EditorialImagePanel() {
         </p>
 
       </motion.div>
-    </section>
+    </motion.section>
   );
 }

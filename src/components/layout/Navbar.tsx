@@ -27,7 +27,7 @@ export default function Navbar() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="text-nav font-medium text-foundation uppercase hover:text-ignition transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-ignition focus-visible:outline-offset-2"
+                  className="nav-link text-nav font-medium text-foundation uppercase cursor-pointer focus-visible:outline-2 focus-visible:outline-ignition focus-visible:outline-offset-2"
                 >
                   {item.label}
                 </a>
