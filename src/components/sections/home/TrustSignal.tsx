@@ -69,7 +69,7 @@ export default function TrustSignal() {
       {/* ── Content ───────────────────────────────────────────────── */}
       <div
         className="w-full px-8 md:px-14 xl:px-20 2xl:px-28"
-        style={{ paddingTop: '220px', paddingBottom: '220px', position: 'relative', zIndex: 2 }}
+        style={{ paddingTop: 'clamp(80px, 15vw, 220px)', paddingBottom: 'clamp(80px, 15vw, 220px)', position: 'relative', zIndex: 2 }}
       >
 
         {/* "Trusted by teams operating" */}
@@ -90,12 +90,13 @@ export default function TrustSignal() {
         {/* €100M+ */}
         <motion.p
           style={{
-            fontSize: 'clamp(96px, 17.5vw, 236px)',
+            fontSize: 'clamp(52px, 17.5vw, 236px)',
             fontWeight: 400,
             letterSpacing: '-0.048em',
             lineHeight: 1.0,
             color: '#C64444',
             margin: 0,
+            whiteSpace: 'nowrap',
           }}
           {...reveal(0.18, { scale: 1.04 })}
         >

@@ -1,9 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
 import AtmosphericBackground from './AtmosphericBackground';
-import type { MotionValue } from 'framer-motion';
 
 // Single easing curve used everywhere — imperceptible start, ultra-smooth settle
 const E = [0.18, 1, 0.32, 1] as const;
@@ -12,21 +11,33 @@ export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
 
+  // Disable all scroll choreography on mobile — image is below the fold
+  // so the brief pre-hydration window is imperceptible
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const disableScroll = isMobile || !!shouldReduceMotion;
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
 
-  // Micro zoom-out — sticky container breathes out as user scrolls in
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], shouldReduceMotion ? [1, 1] : [1, 0.97]);
+  // Micro zoom-out — disabled on mobile
+  const heroScale = useTransform(scrollYProgress, [0, 0.5], disableScroll ? [1, 1] : [1, 0.97]);
 
-  // Scroll-driven dissolve (runs after entry is long done)
-  const textOpacity = useTransform(scrollYProgress, [0.14, 0.30], [1, 0]);
+  // Scroll-driven dissolve — disabled on mobile
+  const textOpacity = useTransform(scrollYProgress, [0.14, 0.30], disableScroll ? [1, 1] : [1, 0]);
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
   const textBlurNum = useTransform(
     scrollYProgress,
     [0.14, 0.21, 0.27, 0.32],
-    shouldReduceMotion ? [0, 0, 0, 0] : [0, 1.5, 5, 14]
+    disableScroll ? [0, 0, 0, 0] : [0, 1.5, 5, 14]
   );
   const textFilter = useMotionTemplate`blur(${textBlurNum}px)`;
 
@@ -69,7 +80,7 @@ export default function Hero() {
           transition={{ duration: 1.6, ease: E }}
           style={{ willChange: 'transform, opacity' }}
         >
-          <AtmosphericBackground scrollYProgress={scrollYProgress} />
+          <AtmosphericBackground scrollYProgress={isMobile ? undefined : scrollYProgress} />
         </motion.div>
 
         <div className="hero-grain absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true" />
