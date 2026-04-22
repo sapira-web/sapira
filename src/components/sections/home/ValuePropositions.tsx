@@ -64,7 +64,7 @@ export default function ValuePropositions() {
     <section style={{ backgroundColor: '#F9F9F9' }}>
       <div
         className="w-full px-6 md:px-14 xl:px-20 2xl:px-28"
-        style={{ paddingTop: 'clamp(120px, 11vw, 200px)', paddingBottom: 'clamp(120px, 11vw, 200px)' }}
+        style={{ paddingTop: 'clamp(72px, 11vw, 200px)', paddingBottom: 'clamp(120px, 11vw, 200px)' }}
       >
 
         {/* ── Eyebrow ──────────────────────────────────────────────── */}
