@@ -12,6 +12,14 @@ export default function TrustSignal() {
 
   const [count, setCount] = useState(72)
   const [mplusSettled, setMplusSettled] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   useEffect(() => {
     if (!isInView) return
@@ -65,22 +73,26 @@ export default function TrustSignal() {
       ref={sectionRef}
       style={{ backgroundColor: '#EFEBE6', position: 'relative', overflow: 'hidden' }}
     >
-
-      {/* ── Content ───────────────────────────────────────────────── */}
       <div
         className="w-full px-6 md:px-14 xl:px-20 2xl:px-28"
-        style={{ paddingTop: 'clamp(80px, 15vw, 220px)', paddingBottom: 'clamp(80px, 15vw, 220px)', position: 'relative', zIndex: 2 }}
+        style={{
+          paddingTop:    isMobile ? 'clamp(56px, 15vw, 220px)' : 'clamp(80px, 15vw, 220px)',
+          paddingBottom: isMobile ? 'clamp(56px, 15vw, 220px)' : 'clamp(80px, 15vw, 220px)',
+          position: 'relative',
+          zIndex: 2,
+        }}
       >
 
         {/* "Trusted by teams operating" */}
         <motion.p
           style={{
-            fontSize: 'clamp(30px, 4.2vw, 66px)',
-            fontWeight: 400,
-            letterSpacing: '-0.028em',
-            lineHeight: 1.0,
-            color: 'rgba(73,72,72,0.52)',
-            margin: 0,
+            fontSize:      isMobile ? '20px'                    : 'clamp(30px, 4.2vw, 66px)',
+            fontWeight:    400,
+            letterSpacing: '-0.024em',
+            lineHeight:    isMobile ? 0.95                      : 1.0,
+            color:         isMobile ? 'rgba(73,72,72,0.38)'     : 'rgba(73,72,72,0.52)',
+            margin:        0,
+            marginBottom:  isMobile ? '4px'                     : 0,
           }}
           {...reveal(0)}
         >
@@ -90,13 +102,14 @@ export default function TrustSignal() {
         {/* €100M+ */}
         <motion.p
           style={{
-            fontSize: 'clamp(52px, 17.5vw, 236px)',
-            fontWeight: 400,
+            fontSize:      isMobile ? 'clamp(64px, 22vw, 236px)' : 'clamp(52px, 17.5vw, 236px)',
+            fontWeight:    isMobile ? 500                         : 400,
             letterSpacing: '-0.048em',
-            lineHeight: 1.0,
-            color: '#C64444',
-            margin: 0,
-            whiteSpace: 'nowrap',
+            lineHeight:    isMobile ? 0.95                        : 1.0,
+            color:         '#C64444',
+            margin:        0,
+            marginBottom:  isMobile ? '4px'                       : 0,
+            whiteSpace:    'nowrap',
           }}
           {...reveal(0.18, { scale: 1.04 })}
         >
@@ -114,12 +127,12 @@ export default function TrustSignal() {
         {/* "in annual procurement" */}
         <motion.p
           style={{
-            fontSize: 'clamp(30px, 4.2vw, 66px)',
-            fontWeight: 400,
-            letterSpacing: '-0.028em',
-            lineHeight: 1.0,
-            color: 'rgba(73,72,72,0.52)',
-            margin: 0,
+            fontSize:      isMobile ? '20px'                    : 'clamp(30px, 4.2vw, 66px)',
+            fontWeight:    400,
+            letterSpacing: '-0.024em',
+            lineHeight:    isMobile ? 0.95                      : 1.0,
+            color:         isMobile ? 'rgba(73,72,72,0.40)'     : 'rgba(73,72,72,0.52)',
+            margin:        0,
           }}
           {...reveal(0.38)}
         >
