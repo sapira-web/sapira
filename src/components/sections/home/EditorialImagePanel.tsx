@@ -1,55 +1,67 @@
 'use client';
 
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, easeOut } from 'framer-motion';
 
 export default function EditorialImagePanel() {
   const shouldReduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
 
-  // Primary parallax — negative start so image enters viewport mid-hero-dissolve
+  // Mobile detection — useEffect avoids hydration mismatch.
+  // Image is below the fold so the brief pre-hydration window is imperceptible.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const disable = shouldReduceMotion || isMobile;
+
+  // Primary parallax — negative start pulls image up to overlap hero on desktop
   const imageY = useTransform(
     scrollY,
     [0, 1400],
-    [shouldReduceMotion ? 0 : -160, shouldReduceMotion ? 0 : -700]
+    disable ? [0, 0] : [-160, -700]
   );
 
-  // Scale + blur settle (image arrives scaled up, settles to 1)
+  // Scale + blur settle
   const imageScale = useTransform(
     scrollY,
     [200, 1400],
-    [shouldReduceMotion ? 1 : 1.18, 1],
+    disable ? [1, 1] : [1.18, 1],
     { ease: easeOut }
   );
   const imageBlurRaw = useTransform(
     scrollY,
     [200, 1400],
-    [shouldReduceMotion ? 0 : 1.2, 0],
+    disable ? [0, 0] : [1.2, 0],
     { ease: easeOut }
   );
   const imageFilter = useTransform(imageBlurRaw, (v) => `blur(${v}px)`);
 
-  // Depth settle — wrapper drifts down slightly as image stabilises (GPU: transform only)
+  // Depth settle — micro y-drift as image stabilises
   const settleY = useTransform(
     scrollY,
     [200, 1100],
-    [shouldReduceMotion ? 0 : -8, 0],
+    disable ? [0, 0] : [-8, 0],
     { ease: easeOut }
   );
 
-  // Aura breathes out as image settles
-  const auraOpacity = useTransform(scrollY, [200, 1000], [0.85, 0.48]);
-  const auraScale   = useTransform(scrollY, [200, 1000], [1.05, 1.00]);
+  // Aura — hidden on mobile
+  const auraOpacity = useTransform(scrollY, [200, 1000], disable ? [0, 0] : [0.85, 0.48]);
+  const auraScale   = useTransform(scrollY, [200, 1000], disable ? [1, 1] : [1.05, 1.00]);
 
   return (
     <motion.section
       className="relative w-full"
       style={{ zIndex: 15, marginBottom: imageY }}
     >
-      {/* Primary parallax layer — no overflow:hidden here */}
       <motion.div className="relative w-full" style={{ y: imageY }}>
 
-        {/* Warm aura behind image — scroll-driven opacity + scale, GPU only */}
+        {/* Warm aura — desktop only */}
         <motion.div
           aria-hidden="true"
           style={{
@@ -65,17 +77,16 @@ export default function EditorialImagePanel() {
           }}
         />
 
-        {/* Settle wrapper — micro y-drift as depth stabilises */}
+        {/* Settle wrapper */}
         <motion.div className="relative w-full" style={{ y: settleY, zIndex: 1 }}>
 
-          {/* overflow:hidden + static warm shadow
-              Box-shadow renders outside the element — not clipped by overflow:hidden */}
           <div
             className="relative w-full overflow-hidden"
             style={{
               borderRadius: '0',
-              boxShadow:
-                '0 8px 18px rgba(86,43,42,0.10), 0 24px 48px rgba(86,43,42,0.08), 0 60px 90px rgba(86,43,42,0.05)',
+              boxShadow: isMobile
+                ? '0 4px 20px rgba(86,43,42,0.08)'
+                : '0 8px 18px rgba(86,43,42,0.10), 0 24px 48px rgba(86,43,42,0.08), 0 60px 90px rgba(86,43,42,0.05)',
             }}
           >
             {/* Scale + blur layer */}

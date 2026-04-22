@@ -55,8 +55,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="-mt-[64px]"
-      style={{ height: '150vh' }}
+      className="-mt-[64px] h-[100dvh] md:h-[150vh]"
     >
       <motion.div
         className="sticky top-0 overflow-hidden"
@@ -142,7 +141,7 @@ export default function Hero() {
               </motion.p>
 
               <motion.div
-                className="flex flex-row items-center gap-4"
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
                 style={{ willChange: 'transform, opacity' }}
                 {...enter(0.98, 0.90, { y: 5, scale: 0.99 })}
               >
@@ -150,8 +149,8 @@ export default function Hero() {
                   href="#"
                   onClick={e => e.preventDefault()}
                   data-cursor-label="GO"
-                  className="group inline-flex items-center gap-3 bg-oxide text-rational px-7 rounded-[2px] transition-all duration-300 hover:bg-[#6a3635] hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
-                  style={{ paddingBlock: 'calc(var(--spacing) * 3)' }}
+                  className="group inline-flex items-center justify-between w-full sm:w-auto gap-3 bg-oxide text-rational px-7 rounded-[2px] transition-all duration-300 hover:bg-[#6a3635] hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
+                  style={{ paddingBlock: 'calc(var(--spacing) * 3.5)' }}
                 >
                   <span className="text-[12px] font-medium tracking-[0.02em] uppercase">
                     See it on your data
@@ -164,9 +163,9 @@ export default function Hero() {
                   href="#"
                   onClick={e => e.preventDefault()}
                   data-cursor-label="VIEW"
-                  className="group inline-flex items-center gap-3 px-7 rounded-[2px]"
+                  className="group inline-flex items-center justify-between w-full sm:w-auto gap-3 px-7 rounded-[2px]"
                   style={{
-                    paddingBlock: 'calc(var(--spacing) * 3)',
+                    paddingBlock: 'calc(var(--spacing) * 3.5)',
                     backgroundColor: 'rgba(73,72,72,0.08)',
                     border: '1px solid rgba(73,72,72,0.18)',
                     color: '#494848',
