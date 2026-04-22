@@ -8,7 +8,7 @@ export default function Header() {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 w-full z-50 flex items-center px-4 md:px-14 xl:px-20 2xl:px-28"
+      className="fixed top-0 left-0 w-full z-50 flex items-center px-6 md:px-14 xl:px-20 2xl:px-28"
       style={{
         height: '64px',
         backgroundColor: 'rgba(255, 255, 255, 0.40)',
