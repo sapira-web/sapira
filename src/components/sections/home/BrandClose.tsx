@@ -36,11 +36,10 @@ export default function BrandClose() {
       }}
     >
       <motion.p
+        className="px-8 md:px-14 xl:px-20 2xl:px-28"
         style={{
           margin: 0,
-          paddingLeft: '64px',
-          paddingRight: '64px',
-          fontSize: 'clamp(96px, 16.5vw, 220px)',
+          fontSize: 'clamp(52px, 16.5vw, 220px)',
           fontWeight: 400,
           letterSpacing: '-0.045em',
           lineHeight: 0.92,
