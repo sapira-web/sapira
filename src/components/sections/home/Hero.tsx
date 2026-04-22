@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
-import AtmosphericBackground from './AtmosphericBackground';
 
 // Single easing curve used everywhere — imperceptible start, ultra-smooth settle
 const E = [0.18, 1, 0.32, 1] as const;
@@ -72,7 +71,7 @@ export default function Hero() {
         className="sticky top-0 overflow-hidden"
         style={{ height: '100vh', zIndex: 1, scale: heroScale, transformOrigin: 'center center' }}
       >
-        {/* ── Background settle — atmosphere breathes into place ──────────── */}
+        {/* ── Background settle — breathes into place ──────────────────────── */}
         <motion.div
           className="absolute inset-0"
           initial={shouldReduceMotion ? { opacity: 0.96 } : { scale: 1.02, opacity: 0.96 }}
@@ -80,13 +79,8 @@ export default function Hero() {
           transition={{ duration: 1.6, ease: E }}
           style={{ willChange: 'transform, opacity' }}
         >
-          {isMobile
-            ? <div className="absolute inset-0" style={{ backgroundColor: '#F5F3EF' }} />
-            : <AtmosphericBackground scrollYProgress={scrollYProgress} />
-          }
+          <div className="hero-bg absolute inset-0" aria-hidden="true" />
         </motion.div>
-
-        <div className="hero-grain absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true" />
 
         {/* ── Content — scroll-dissolves as image rises ───────────────────── */}
         <div className="relative z-10 h-full flex flex-col px-6 md:px-14 xl:px-20 2xl:px-28 pt-24 md:pt-[18vh]">

@@ -125,6 +125,38 @@
   }
 }
 
+/* ── Hero premium background ─────────────────────────────────────────────── */
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0) 60%),
+    radial-gradient(circle at 80% 20%, rgba(234, 223, 211, 0.15), transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(243, 237, 230, 0.15), transparent 60%),
+    linear-gradient(180deg, #F8F4EF 0%, #EFE7DD 100%);
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='hbg'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.38  0 0 0 0 0.36  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23hbg)'/></svg>");
+  background-size: 200px 200px;
+  opacity: 0.025;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .hero-bg {
+    background:
+      radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.60) 0%, rgba(255, 255, 255, 0) 60%),
+      radial-gradient(circle at 80% 20%, rgba(234, 223, 211, 0.15), transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(243, 237, 230, 0.15), transparent 60%),
+      linear-gradient(180deg, #F8F4EF 0%, #EFE7DD 100%);
+  }
+}
+
 /* ── Hero headline gradient text ─────────────────────────────────────────── */
 /* Kept in CSS (not inline style) to avoid React reconciler backgroundClip warning */
 
