@@ -112,14 +112,14 @@ export default function Hero() {
             >
               {/* Group A — problem: softer, receding */}
               <motion.span
-                className="block whitespace-nowrap"
+                className="block"
                 style={{ color: '#6B6763', letterSpacing: '-0.03em', fontWeight: 300 }}
                 {...enter(0.44, 0.70, { y: 12, blur: 6 })}
               >
                 Your company runs on knowledge
               </motion.span>
               <motion.span
-                className="block whitespace-nowrap"
+                className="block"
                 style={{ color: '#6B6763', letterSpacing: '-0.03em', fontWeight: 300, marginBottom: '0.1em' }}
                 {...enter(0.56, 0.70, { y: 12, blur: 6 })}
               >
@@ -128,7 +128,7 @@ export default function Hero() {
 
               {/* Group B — resolution: darker, denser, lands last */}
               <motion.span
-                className="block whitespace-nowrap"
+                className="block"
                 style={{ color: '#2E2A27', letterSpacing: '-0.038em', lineHeight: '1.00', fontWeight: 500 }}
                 {...enter(0.66, 0.70, { y: 12, blur: 6 })}
               >
