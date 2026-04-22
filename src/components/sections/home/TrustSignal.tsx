@@ -68,7 +68,7 @@ export default function TrustSignal() {
 
       {/* ── Content ───────────────────────────────────────────────── */}
       <div
-        className="w-full px-8 md:px-14 xl:px-20 2xl:px-28"
+        className="w-full px-4 md:px-14 xl:px-20 2xl:px-28"
         style={{ paddingTop: 'clamp(80px, 15vw, 220px)', paddingBottom: 'clamp(80px, 15vw, 220px)', position: 'relative', zIndex: 2 }}
       >
 

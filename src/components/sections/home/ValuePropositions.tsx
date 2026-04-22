@@ -63,7 +63,7 @@ export default function ValuePropositions() {
   return (
     <section style={{ backgroundColor: '#F9F9F9' }}>
       <div
-        className="w-full px-8 md:px-14 xl:px-20 2xl:px-28"
+        className="w-full px-4 md:px-14 xl:px-20 2xl:px-28"
         style={{ paddingTop: 'clamp(120px, 11vw, 200px)', paddingBottom: 'clamp(120px, 11vw, 200px)' }}
       >
 
