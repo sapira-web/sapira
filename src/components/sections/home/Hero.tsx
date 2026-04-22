@@ -108,7 +108,7 @@ export default function Hero() {
                 scoped to the element being animated, not a cross-layer parent */}
             <h1
               className="shrink-0 font-normal leading-[1.04] text-balance"
-              style={{ fontSize: 'clamp(34px, 5.0vw, 72px)', marginBottom: 'calc(var(--spacing) * 4)', textShadow: '0 1px 0 rgba(255,255,255,0.30)' }}
+              style={{ fontSize: 'clamp(38px, 5.0vw, 72px)', marginBottom: 'calc(var(--spacing) * 4)', textShadow: '0 1px 0 rgba(255,255,255,0.30)' }}
             >
               {/* Group A — problem: softer, receding */}
               <motion.span
