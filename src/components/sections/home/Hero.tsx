@@ -142,7 +142,7 @@ export default function Hero() {
             </h1>
 
             {/* Body + CTAs */}
-            <div className="shrink-0 flex flex-col mb-8 md:mb-10 md:max-w-[460px] xl:max-w-[520px] 2xl:max-w-[580px]" style={{ gap: 'calc(var(--spacing) * 8)' }}>
+            <div className="shrink-0 flex flex-col gap-5 md:gap-8 mb-5 md:mb-10 md:max-w-[460px] xl:max-w-[520px] 2xl:max-w-[580px]">
               <motion.p
                 style={{
                   fontSize: '16px', lineHeight: '1.62', letterSpacing: '-0.012em',
