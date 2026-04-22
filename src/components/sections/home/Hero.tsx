@@ -80,7 +80,10 @@ export default function Hero() {
           transition={{ duration: 1.6, ease: E }}
           style={{ willChange: 'transform, opacity' }}
         >
-          <AtmosphericBackground scrollYProgress={isMobile ? undefined : scrollYProgress} />
+          {isMobile
+            ? <div className="absolute inset-0" style={{ backgroundColor: '#F5F3EF' }} />
+            : <AtmosphericBackground scrollYProgress={scrollYProgress} />
+          }
         </motion.div>
 
         <div className="hero-grain absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true" />
