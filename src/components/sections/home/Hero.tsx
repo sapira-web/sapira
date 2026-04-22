@@ -89,7 +89,7 @@ export default function Hero() {
         <div className="hero-grain absolute inset-0 pointer-events-none" style={{ zIndex: 1 }} aria-hidden="true" />
 
         {/* ── Content — scroll-dissolves as image rises ───────────────────── */}
-        <div className="relative z-10 h-full flex flex-col px-8 md:px-14 xl:px-20 2xl:px-28" style={{ paddingTop: '18vh' }}>
+        <div className="relative z-10 h-full flex flex-col px-8 md:px-14 xl:px-20 2xl:px-28 pt-20 md:pt-[18vh]">
           <motion.div style={{ opacity: textOpacity, filter: textFilter }}>
 
             {/* Eyebrow */}
